@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { CartItem, Service } from './CartItem.tsx';
+import { CartItem, Service } from './CartItem';
 import { ShoppingBag } from 'lucide-react';
 
 interface CartProps {
