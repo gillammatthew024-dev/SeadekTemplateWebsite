@@ -26,7 +26,7 @@ console.log('myFont className:', myFont.className);
     mb-6
     leading-tight
     font-bold
-    text-[1.75rem] md:text-[2.75rem] lg:text-[4rem]
+    text-[1rem] md:text-[2rem] lg:text-[3rem]
     bg-gradient-to-r from-indigo-500 to-pink-600
     bg-clip-text text-transparent
     ${myFont.className}

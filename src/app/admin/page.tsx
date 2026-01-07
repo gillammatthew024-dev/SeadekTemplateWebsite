@@ -8,7 +8,6 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { toast } from 'sonner';
-import { MultiSelectServiceList } from "../components/MultiSelectServiceList";
 export default function App() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [targetTable, setTargetTable] = useState<'make-server-be0083bc' | 'clever-responder'>('make-server-be0083bc');
@@ -119,9 +118,6 @@ export default function App() {
           {/* Project List */}
           <div>
             <ProjectList targetTable={targetTable} />
-          </div>
-          <div>
-            <MultiSelectServiceList onChange={(selected) => console.log(selected)} />
           </div>
         </div>
       </div>

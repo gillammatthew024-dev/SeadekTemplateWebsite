@@ -1,5 +1,6 @@
 import { Header } from '../../components/Header';
 import { supabase } from '../../../../utils/supabase/client'; 
+import { myFont } from '../../components/MyFont';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -37,7 +38,8 @@ export default async function Page({ params }: PageProps) {
     <div className="p-10 min-h-screen bg-gray-100">
       <Header/>
       <div className = "mt-20">
-      <h1 className="text-3xl mb-4">{data.title}</h1>
+      <h1 className={`mb-4 tracking-wider mb-6 tracking-wider text-gray-100 bg-gradient-to-r from-indigo-500 to-pink-600
+            bg-clip-text text-transparent ${myFont.className}`}>{data.title}</h1>
       <p>{data.details}</p>
       </div>
     </div>
