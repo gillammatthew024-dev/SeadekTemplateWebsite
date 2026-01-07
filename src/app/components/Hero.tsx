@@ -1,11 +1,12 @@
 'use client';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import Link from 'next/link';
-import { Services } from './Services';
+import { myFont } from './MyFont';
 
 export function Hero() {
+console.log('myFont className:', myFont.className);
   return (
-    <section id="hero" className=" inset-0 relative h-screen overflow-hidden">
+    <section id="hero" className=" inset-0 relative max-h-[850px] overflow-hidden">
       {/* Fixed background image (parallax effect via CSS) */}
       <div className="fixed inset-0 -z-10">
         <ImageWithFallback
@@ -21,14 +22,20 @@ export function Hero() {
       <div className="relative w-screen h-screen flex items-center justify-start">
         <div className="absolute bottom-0 h-1/2 w-screen -translate-y-0 z-10 text-left px-6 md:px-16 lg:px-24">
           <h1
-            className="mb-6 leading-tight font-bold text-[1.75rem] md:text-[2.75rem] lg:text-[4rem] bg-gradient-to-r from-indigo-500 to-pink-600
-      bg-clip-text text-transparent"
+            className={`
+    mb-6
+    leading-tight
+    font-bold
+    text-[1.75rem] md:text-[2.75rem] lg:text-[4rem]
+    bg-gradient-to-r from-indigo-500 to-pink-600
+    bg-clip-text text-transparent
+    ${myFont.className}
+  `}
             style={{
-              background: 'linear-gradient(90deg, #06285cff 0%, #199dc5ff 100%)',
+              background: 'linear-gradient(90deg, #a85507ff 0%, #c0bd0bff 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
-              fontFamily: '"Poppins", sans-serif',
               fontWeight: 700,
               letterSpacing: '-0.02em',
             }}

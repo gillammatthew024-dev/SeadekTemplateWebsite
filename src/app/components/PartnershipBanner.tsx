@@ -1,4 +1,5 @@
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { myFont } from './MyFont';
 
 export function PartnershipBanner() {
   return (
@@ -13,12 +14,11 @@ export function PartnershipBanner() {
       </div>
       
       <div className="relative z-10 text-center text-white px-4">
-        <p className="text-sm tracking-widest mb-3 text-gray-100">COLLABORATION</p>
-        <h2 className="mb-4 tracking-wider mb-6 tracking-wider text-gray-100 bg-gradient-to-r from-indigo-500 to-pink-600
-      bg-clip-text text-transparent">IN PARTNERSHIP WITH CMD SEADEK CERTIFIED FABRICATOR</h2>
+        <p className={`text-sm tracking-widest mb-3 text-gray-100 ${myFont.className}`}>COLLABORATION</p>
+        <h2 className={'mb-4 tracking-wider mb-6 tracking-wider text-gray-100 bg-gradient-to-r from-indigo-500 to-pink-600 bg-clip-text text-transparent ${myFont.className}'}>IN PARTNERSHIP WITH CMD SEADEK CERTIFIED FABRICATOR</h2>
         <p className="max-w-2xl mx-auto text-gray-100">
           Bringing innovative marine solutions and exceptional design together to create 
-          extraordinary experiences on the water
+          extraordinary experiences both on the road and on the water.
         </p>
       </div>
     </section>

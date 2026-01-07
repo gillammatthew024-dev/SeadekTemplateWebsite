@@ -1,4 +1,5 @@
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { myFont } from './MyFont';
 
 export function AboutSeadek() {
   return (
@@ -8,8 +9,8 @@ export function AboutSeadek() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="mb-6 tracking-wider mb-6 tracking-wider text-gray-100 bg-gradient-to-r from-indigo-500 to-pink-600
-      bg-clip-text text-transparent">ABOUT US</h2>
+            <h2 className={`mb-6 tracking-wider text-gray-100 bg-gradient-to-r from-indigo-500 to-pink-600
+                  bg-clip-text text-transparent ${myFont.className}`}>ABOUT US</h2>
             <p className="mb-4 text-gray-100">
               We are a team of passionate designers and creators dedicated to bringing
               your vision to life. With years of experience in the industry, we specialize

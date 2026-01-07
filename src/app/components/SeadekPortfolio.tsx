@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { projectId, publicAnonKey } from '../../../utils/supabase/info';
 import ServiceCarousel from './ServiceCarousel';
+import { myFont } from './MyFont';
 
 interface Project {
   id: string;
@@ -150,8 +151,8 @@ export function SeadekPortfolio() {
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="mb-4 tracking-wider mb-6 tracking-wider text-gray-100 bg-gradient-to-r from-indigo-500 to-pink-600
-      bg-clip-text text-transparent">SELECTED WORK</h2>
+          <h2 className={`mb-4 tracking-wider mb-6 tracking-wider text-gray-100 bg-gradient-to-r from-indigo-500 to-pink-600
+      bg-clip-text text-transparent ${myFont.className}`}>SELECTED WORK</h2>
           <p className="max-w-2xl mx-auto text-gray-100">
             A curated collection of our recent projects showcasing our commitment to excellence and innovation
           </p>
@@ -185,9 +186,10 @@ export function SeadekPortfolio() {
         <div className="text-center">
           <button
             onClick={() => setShowAllProjects(true)}
-            className="inline-flex items-center gap-2 px-8 py-3 bg-white text-black hover:bg-gray-100 transition-colors group translate-y-4"
+           className="inline-flex items-center gap-2 px-8 py-3 bg-black text-white hover:bg-orange-800 transition-colors group translate-y-4 rounded-lg"
+
           >
-            View All Projects
+            <p className={`text-sm tracking-widest mb-3 text-gray-100 ${myFont.className}`}>View All Projects</p>
             <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
           </button>
         </div>

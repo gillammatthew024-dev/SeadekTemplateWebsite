@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { projectId, publicAnonKey } from '../../../utils/supabase/info';
 import ServiceCarousel from './ServiceCarousel';
+import { myFont } from './MyFont';
 
 
 interface Service {
@@ -69,8 +70,8 @@ export function Services() {
 
 			<div className="mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="text-center mb-12">
-					<h2 className="mb-4 tracking-wider mb-6 tracking-wider text-gray-100 bg-gradient-to-r from-indigo-500 to-pink-600
-      bg-clip-text text-transparent ">SERVICES</h2>
+					<h2 className={`mb-4 tracking-wider mb-6 tracking-wider text-gray-100 bg-gradient-to-r from-indigo-500 to-pink-600
+      bg-clip-text text-transparent ${myFont.className}`}>SERVICES</h2>
 					<p className="max-w-2xl mx-auto text-gray-100">
 						Comprehensive solutions tailored to meet your unique needs and exceed
 						your expectations
@@ -84,7 +85,7 @@ export function Services() {
 								key={index}
 								className="inline-flex justify-center text-center p-6 hover:bg-white/10 transition-colors duration-300"
 							>
-								<h3 className="mb-3 tracking-wide text-white">
+								<h3 className={`mb-3 tracking-wide text-white ${myFont.className}`}>
 									{service.title}
 								</h3>
                 <a href={`/services/${encodeURIComponent(service.title)}`} className="hover:opacity-70 transition">
