@@ -6,7 +6,7 @@ import { myFont } from './MyFont';
 export function Hero() {
 console.log('myFont className:', myFont.className);
   return (
-    <section id="hero" className="inset-0 max-h-[850px] overflow-hidden">
+    <section id="hero" className="inset-0 overflow-hidden">
       {/* Fixed background image (parallax effect via CSS) */}
       <div className="fixed inset-0 -z-10">
         <ImageWithFallback
