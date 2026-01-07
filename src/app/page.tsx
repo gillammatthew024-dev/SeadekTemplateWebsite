@@ -16,9 +16,29 @@ export default function Home() {
       <Hero />
       <About />
       <Services />
-      <Portfolio />
+      <Portfolio
+        config={{
+          source: 'main-portfolio',
+          sectionId: 'portfolio',
+          title: 'SELECTED WORK',
+          subtitle: 'A curated collection of our recent projects showcasing our commitment to excellence and innovation',
+          backgroundImage: '/IMG_0230.JPG',
+          showServiceFilter: true,
+          maxPreviewItems: 2,
+        }}
+      />
       <PartnershipBanner />
-      <SeadekPortfolio />
+      <Portfolio
+        config={{
+          source: 'seadek-portfolio',
+          sectionId: 'portfolio',
+          title: 'SELECTED WORK',
+          subtitle: 'A curated collection of our recent projects showcasing our commitment to excellence and innovation',
+          backgroundImage: '/IMG_0230.JPG',
+          showServiceFilter: true,
+          maxPreviewItems: 2,
+        }}
+      />
       <Contact />
       <Footer />
     </div>
