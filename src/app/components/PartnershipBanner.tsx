@@ -10,7 +10,7 @@ export function PartnershipBanner() {
           alt="Partnership banner"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-blue-900"></div>
+        <div className="absolute inset-0 bg-black/60"></div>
       </div>
       
       <div className="relative z-10 text-center text-white px-4">

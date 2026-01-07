@@ -66,7 +66,7 @@ export function Services() {
     };
 	return (
 		<section id="services" className="py-20 w-full h-full relative overflow-hidden">
-			<div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-blue-900 -z-10 opacity-85"></div>
+			<div className="absolute inset-0 bg-black -z-10 opacity-85"></div>
 
 			<div className="mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="text-center mb-12">

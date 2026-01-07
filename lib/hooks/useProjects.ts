@@ -61,6 +61,6 @@ export function useProjects({ source, serviceFilter = [] }: UseProjectsOptions):
   useEffect(() => {
     fetchProjects();
   }, [fetchProjects]);
-
+  //refetch returned to allow manual refresh
   return { projects, isLoading, error, refetch: fetchProjects };
 }
