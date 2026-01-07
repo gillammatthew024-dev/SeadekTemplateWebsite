@@ -19,7 +19,7 @@ export default function Home() {
       <Portfolio
         config={{
           source: 'main-portfolio',
-          sectionId: 'portfolio',
+          sectionid: 'portfolio',
           title: 'SELECTED WORK',
           subtitle: 'A curated collection of our recent projects showcasing our commitment to excellence and innovation',
           backgroundImage: '/IMG_0230.JPG',
@@ -31,7 +31,7 @@ export default function Home() {
       <Portfolio
         config={{
           source: 'seadek-portfolio',
-          sectionId: 'portfolio',
+          sectionid: 'portfolio',
           title: 'SELECTED WORK',
           subtitle: 'A curated collection of our recent projects showcasing our commitment to excellence and innovation',
           backgroundImage: '/IMG_0230.JPG',
