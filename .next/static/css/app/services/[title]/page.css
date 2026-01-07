@@ -1,0 +1,13 @@
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[3].use[1]!./node_modules/next/dist/build/webpack/loaders/next-font-loader/index.js??ruleSet[1].rules[14].oneOf[3].use[2]!./node_modules/next/font/local/target.css?{"path":"src\\app\\components\\MyFont.tsx","import":"","arguments":[{"src":"../../../public/fonts/Draco.otf","weight":"700","style":"normal"}],"variableName":"myFont"} ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+@font-face {
+font-family: '__myFont_956223';
+src: url(/_next/static/media/79a1454929c60cac-s.p.otf) format('opentype');
+font-display: swap;
+font-weight: 700;
+font-style: normal;
+}@font-face {font-family: '__myFont_Fallback_956223';src: local("Arial");ascent-override: 21.80%;descent-override: 5.81%;line-gap-override: 0.00%;size-adjust: 344.07%
+}.__className_956223 {font-family: '__myFont_956223', '__myFont_Fallback_956223';font-weight: 700;font-style: normal
+}
+

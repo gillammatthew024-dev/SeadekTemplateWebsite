@@ -27,7 +27,6 @@ export default function Home() {
           maxPreviewItems: 2,
         }}
       />
-      <PartnershipBanner />
       <Portfolio
         config={{
           source: 'seadek-portfolio',
@@ -39,6 +38,7 @@ export default function Home() {
           maxPreviewItems: 2,
         }}
       />
+      <PartnershipBanner />
       <Contact />
       <Footer />
     </div>
