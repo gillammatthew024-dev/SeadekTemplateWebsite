@@ -1,0 +1,14 @@
+{
+  "node": {
+    "b2d552f716a78b33167d6b615121cd1dafa77239": {
+      "workers": {
+        "app/admin/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cmattg%5C%5CPolishPerfection%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Cactions.ts%22%2C%5B%22validateAdminPassword%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/admin/page": "action-browser"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "iMEgufP7RT/59pW7id3GSVvGVWT08OdYdIuiKunxlqs="
+}
