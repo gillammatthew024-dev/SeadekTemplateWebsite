@@ -6,7 +6,7 @@ import { myFont } from './MyFont';
 export function Hero() {
 console.log('myFont className:', myFont.className);
   return (
-    <section id="hero" className=" inset-0 relative max-h-[800px] overflow-hidden">
+    <section id="hero" className=" inset-0 relative overflow-hidden">
       {/* Fixed background image (parallax effect via CSS) */}
       <div className="fixed inset-0 -z-10">
         <ImageWithFallback
@@ -19,7 +19,7 @@ console.log('myFont className:', myFont.className);
 
       {/* Sticky centered content — stays visually fixed while hero is in view */}
       
-      <div className="h-1/2 relative w-screen min-h-[700px] flex items-center justify-start">
+      <div className="relative w-screen min-h-[700px] flex items-center justify-start">
         <div className="absolute bottom-0 h-1/2 w-screen -translate-y-0 z-10 text-left px-6 md:px-16 lg:px-24">
           <h1
             className={`
@@ -40,7 +40,8 @@ console.log('myFont className:', myFont.className);
               letterSpacing: '-0.02em',
             }}
           >
-            CREATIVE EXCELLENCE
+            CREATIVE 
+            EXCELLENCE
           </h1>
 
           <p className="max-w-2xl mb-8 text-lg md:text-xl text-white/90 font-light">
@@ -48,7 +49,7 @@ console.log('myFont className:', myFont.className);
           </p>
           <Link
             href="/checkout"
-            className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-semibold text-white shadow-2xl transition transform hover:brightness-105 active:translate-y-0.5"
+            className="bottom-0 inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-semibold text-white shadow-2xl transition transform hover:brightness-105 active:translate-y-0.5"
             style={{
               background: 'linear-gradient(90deg,#2563eb 0%,#1e40af 100%)',
             }}
