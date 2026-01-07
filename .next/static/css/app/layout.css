@@ -1728,9 +1728,6 @@ h1, h2, h3 {
   .text-\[0\.8rem\] {
     font-size: 0.8rem;
   }
-  .text-\[1\.5rem\] {
-    font-size: 1.5rem;
-  }
   .text-\[1rem\] {
     font-size: 1rem;
   }
@@ -4095,11 +4092,6 @@ h1, h2, h3 {
       line-height: var(--tw-leading, var(--text-xl--line-height));
     }
   }
-  .md\:text-\[2\.5rem\] {
-    @media (width >= 48rem) {
-      font-size: 2.5rem;
-    }
-  }
   .md\:text-\[2rem\] {
     @media (width >= 48rem) {
       font-size: 2rem;
@@ -4209,11 +4201,6 @@ h1, h2, h3 {
   .lg\:px-24 {
     @media (width >= 64rem) {
       padding-inline: calc(var(--spacing) * 24);
-    }
-  }
-  .lg\:text-\[3\.5rem\] {
-    @media (width >= 64rem) {
-      font-size: 3.5rem;
     }
   }
   .lg\:text-\[3rem\] {

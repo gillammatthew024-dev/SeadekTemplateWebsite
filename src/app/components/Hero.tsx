@@ -40,7 +40,7 @@ console.log('myFont className:', myFont.className);
               letterSpacing: '-0.02em',
             }}
           >
-            CREATIVE EXCELLENCE
+            CREATIVE <p>EXCELLENCE</p>
           </h1>
 
           <p className="max-w-2xl mb-8 text-lg md:text-xl text-white/90 font-light">
