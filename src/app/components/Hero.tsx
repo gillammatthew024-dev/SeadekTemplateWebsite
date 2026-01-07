@@ -6,7 +6,7 @@ import { myFont } from './MyFont';
 export function Hero() {
 console.log('myFont className:', myFont.className);
   return (
-    <section id="hero" className=" inset-0 relative max-h-[850px] overflow-hidden">
+    <section id="hero" className="inset-0 max-h-[850px] overflow-hidden">
       {/* Fixed background image (parallax effect via CSS) */}
       <div className="fixed inset-0 -z-10">
         <ImageWithFallback
@@ -20,7 +20,7 @@ console.log('myFont className:', myFont.className);
       {/* Sticky centered content — stays visually fixed while hero is in view */}
       
       <div className="relative w-screen h-screen flex items-center justify-start">
-        <div className="absolute bottom-0 h-1/2 w-screen -translate-y-0 z-10 text-left px-6 md:px-16 lg:px-24">
+        <div className="absolute bottom-0 w-screen -translate-y-0 z-10 text-left px-6 md:px-16 lg:px-24">
           <h1
             className={`
     mb-6
