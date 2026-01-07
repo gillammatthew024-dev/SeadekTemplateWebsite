@@ -19,7 +19,7 @@ console.log('myFont className:', myFont.className);
 
       {/* Sticky centered content — stays visually fixed while hero is in view */}
       
-      <div className="h-1/2relative w-screen h-screen flex items-center justify-start">
+      <div className="h-1/2 relative w-screen h-screen flex items-center justify-start">
         <div className="absolute bottom-0 h-1/2 w-screen -translate-y-0 z-10 text-left px-6 md:px-16 lg:px-24">
           <h1
             className={`
