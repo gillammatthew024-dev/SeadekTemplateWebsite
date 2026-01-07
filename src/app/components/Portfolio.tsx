@@ -44,7 +44,7 @@ export function Portfolio({ config }: PortfolioSectionProps) {
   };
 
   return (
-    <section id={sectionId} className="py-20 bg-gray-50" style={sectionStyle}>
+    <section id={sectionid} className="py-20 bg-gray-50" style={sectionStyle}>
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black opacity-70" />
 
