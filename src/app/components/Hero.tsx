@@ -6,7 +6,7 @@ import { myFont } from './MyFont';
 export function Hero() {
 console.log('myFont className:', myFont.className);
   return (
-    <section id="hero" className="inset-0 overflow-hidden">
+    <section id="hero" className=" inset-0 relative max-h-[800px] overflow-hidden">
       {/* Fixed background image (parallax effect via CSS) */}
       <div className="fixed inset-0 -z-10">
         <ImageWithFallback
@@ -19,20 +19,20 @@ console.log('myFont className:', myFont.className);
 
       {/* Sticky centered content — stays visually fixed while hero is in view */}
       
-      <div className="relative w-screen h-screen flex items-center justify-start">
-        <div className="absolute bottom-0 w-screen -translate-y-0 z-10 text-left px-6 md:px-16 lg:px-24">
+      <div className="h-1/2relative w-screen h-screen flex items-center justify-start">
+        <div className="absolute bottom-0 h-1/2 w-screen -translate-y-0 z-10 text-left px-6 md:px-16 lg:px-24">
           <h1
             className={`
     mb-6
     leading-tight
     font-bold
-    text-[1rem] md:text-[2rem] lg:text-[3rem]
+    text-[1.25rem] md:text-[2.25rem] lg:text-[3.5rem]
     bg-gradient-to-r from-indigo-500 to-pink-600
     bg-clip-text text-transparent
     ${myFont.className}
   `}
             style={{
-              background: 'linear-gradient(90deg, #a85507ff 0%, #c0bd0bff 100%)',
+              background: 'linear-gradient(90deg, #b16707ff 0%, #ccb532ff 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
@@ -40,7 +40,7 @@ console.log('myFont className:', myFont.className);
               letterSpacing: '-0.02em',
             }}
           >
-            CREATIVE <p>EXCELLENCE</p>
+            CREATIVE EXCELLENCE
           </h1>
 
           <p className="max-w-2xl mb-8 text-lg md:text-xl text-white/90 font-light">
