@@ -9,7 +9,7 @@ const API_BASE =
   (typeof window !== 'undefined' ? window.location.origin : '');
 
 interface Service {
-  id: string;
+  id: bigint;
   title: string;
   details: string;
   createdAt: string;

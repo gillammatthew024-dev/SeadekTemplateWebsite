@@ -95,9 +95,6 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.2 }}
                     >
-                      <p className="text-sm tracking-widest text-gray-500 mb-4">
-                        {project.category}
-                      </p>
                       <h2 className="mb-6 tracking-wide">{project.title}</h2>
                       <p className="mb-8 text-gray-600 leading-relaxed">
                         {project.description}
@@ -106,25 +103,6 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                         {project.details}
                       </p>
 
-                      {/* Meta Information */}
-                      <div className="space-y-4 border-t border-gray-200 pt-8">
-                        {project.client && (
-                          <div>
-                            <p className="text-sm tracking-wider text-gray-500 mb-1">
-                              CLIENT
-                            </p>
-                            <p className="text-gray-900">{project.client}</p>
-                          </div>
-                        )}
-                        {project.year && (
-                          <div>
-                            <p className="text-sm tracking-wider text-gray-500 mb-1">
-                              YEAR
-                            </p>
-                            <p className="text-gray-900">{project.year}</p>
-                          </div>
-                        )}
-                      </div>
                     </MotionDiv>
                   </div>
                 </div>

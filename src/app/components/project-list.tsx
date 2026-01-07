@@ -8,7 +8,7 @@ const API_BASE =
   (typeof window !== 'undefined' ? window.location.origin : '');
 
 interface Project {
-  id: string;
+  id: bigint;
   title: string;
   details: string;
   imageUrls: string[];

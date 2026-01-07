@@ -16,6 +16,7 @@ interface Project {
   details?: string;
   imageUrls?: string[];
   createdAt?: string;
+  services?: string[];
 }
 interface Service {
   id: string;
@@ -140,8 +141,12 @@ export function Portfolio() {
 
 
   const selected = projects.slice(0, 2);
-  const style = {backgroundImage: 'url(/IMG_0230.JPG)', backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative'};
-
+  const style: React.CSSProperties = {
+  backgroundImage: 'url(/IMG_0230.JPG)',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  position: 'relative',
+};
   return (
     <section id="portfolio" className="py-20 bg-gray-50" style = {style}>
       <div className="absolute inset-0 bg-black opacity-70"></div>
@@ -163,7 +168,7 @@ export function Portfolio() {
             >
               <div className="relative h-80 overflow-hidden">
                 <ImageWithFallback
-                  src={project.imageUrls[0] || project.imageUrls?.[0] || ''}
+                  src={project.imageUrls?.[0] ?? '/placeholder.png'}
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />

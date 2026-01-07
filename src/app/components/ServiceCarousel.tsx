@@ -11,7 +11,7 @@ export default function ServiceCarousel({ onChange }: Props) {
     <div className="space-y-4">
       {/* Fetch + select list */}
       <MultiSelectServiceList
-        onChange={(titles) => onChange(titles)}
+        onChange={(titles) => onChange?.(titles)}
       />
 
       {/* ─── CAROUSEL STYLE VIEW ─── */}
