@@ -85,7 +85,7 @@ export function AllProjectsView({ isOpen, onClose, allProjects }: AllProjectsVie
                       >
                         <div className="relative h-64 overflow-hidden">
                           <ImageWithFallback
-                            src={project.image}
+                            src={project.imageUrls?[0] || ''}
                             alt={project.title}
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                           />
