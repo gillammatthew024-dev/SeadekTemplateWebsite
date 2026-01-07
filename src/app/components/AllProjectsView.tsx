@@ -5,17 +5,13 @@ import { useEffect, useState } from 'react';
 import { ProjectModal } from './ProjectModal';
 
 interface Project {
-  id: number;
+  id: string;
   title: string;
-  category: string;
-  image: string;
-  description: string;
-  details: string;
-  client?: string;
-  year?: string;
-  gallery: string[];
+  description?: string;
+  details?: string;
+  imageUrls?: string[];
+  createdAt?: string;
 }
-
 interface AllProjectsViewProps {
   isOpen: boolean;
   onClose: () => void;
