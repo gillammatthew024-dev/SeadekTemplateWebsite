@@ -17,11 +17,11 @@ export function PartnershipBanner() {
       </div>
       
       <div className="relative z-10 text-center text-white px-4">
-        <p className={`text-sm tracking-widest mb-3 text-gray-100 ${myFont.className}`}>COLLABORATION</p>
+        <p className={`text-sm tracking-widest mt-8 mb-3 text-gray-100 ${myFont.className}`}>COLLABORATION</p>
         <div className  = "w-screen flex flex-row justify-center items-center gap-8 mb-4 p-4">
           <img className = "rounded-lg shadow-sm" width = {250} height = {110} src="https://conceptmarinedesign.com/wp-content/uploads/2023/10/marine-logo-bleu-fr_uid62d576c52a616.svg" alt="CMD Produits Nautiques"></img>
           </div>
-        <h2 className={'mb-4 tracking-wider mb-6 tracking-wider text-gray-100 bg-gradient-to-r from-indigo-500 to-pink-600 bg-clip-text text-transparent ${myFont.className}'}>IN PARTNERSHIP WITH CMD SEADEK CERTIFIED FABRICATOR</h2>
+        <h2 className={'mt-8 mb-4 tracking-wider mb-6 tracking-wider text-gray-100 bg-gradient-to-r from-indigo-500 to-pink-600 bg-clip-text text-transparent ${myFont.className}'}>IN PARTNERSHIP WITH CMD SEADEK CERTIFIED FABRICATOR</h2>
         <p className="max-w-2xl mx-auto text-white font-heatlhy">
           Bringing innovative marine solutions and exceptional design together to create 
           extraordinary experiences both on the road and on the water.
