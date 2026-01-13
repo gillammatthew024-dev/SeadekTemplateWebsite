@@ -1,6 +1,8 @@
 import { Header } from '../../components/Header';
 import { supabase } from '../../../../utils/supabase/client'; 
 import { myFont } from '../../components/MyFont';
+import Hero3DBackground from '../../components/Hero3DBackground';
+import BubbleWrapper from '../../components/BubbleWrapper';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -34,14 +36,18 @@ export default async function Page({ params }: PageProps) {
   }
 
   return (
-
-    <div className="p-10 min-h-screen bg-gray-100">
+    
+    <div className="p-10 w-screen min-h-screen bg-gray-100">
+      <Hero3DBackground>
       <Header/>
+      <BubbleWrapper>
       <div className = "mt-20">
       <h1 className={`mb-4 tracking-wider mb-6 tracking-wider text-gray-100 bg-gradient-to-r from-indigo-500 to-pink-600
-            bg-clip-text text-transparent ${myFont.className}`}>{data.title}</h1>
-      <p>{data.details}</p>
+            bg-clip-text text-gray-100 ${myFont.className}`}>{data.title}</h1>
+      <p className = "text-gray-100 break-words">{data.details}</p>
       </div>
+      </BubbleWrapper>
+      </Hero3DBackground>
     </div>
   );
 }

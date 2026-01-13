@@ -12,6 +12,22 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+    "/services/[title]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/services/[title]/page.css",
+      "static/chunks/app/services/[title]/page.js"
+    ],
+    "/admin/service/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/service/page.js"
+    ],
+    "/admin/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/page.js"
+    ],
     "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",

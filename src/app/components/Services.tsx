@@ -5,12 +5,36 @@ import { projectId, publicAnonKey } from '../../../utils/supabase/info';
 import ServiceCarousel from './ServiceCarousel';
 import { myFont } from './MyFont';
 
-
 interface Service {
   id: string;
   title: string;
-  details: string;
+  description: string;
+  icon: string;
   createdAt: string;
+}
+// In your Services component
+import { ServiceIcon } from './ServiceIcon';
+import GlossyCard from './GlossyCardComponent';
+
+interface ServicesProps {
+  services: Service[];
+}
+
+export function ServicesList({ services }: ServicesProps) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {services.map((service) => (
+        <GlossyCard
+          key={service.id}
+          title={service.title}
+          icon={<ServiceIcon name={service.icon} size={28} />}
+          accentColor="#b16707" // Your brand gold color
+        >
+          <p>{service.description}</p>
+        </GlossyCard>
+      ))}
+    </div>
+  );
 }
 export function Services() {
   const [services, setServices] = useState<Service[]>([]);
@@ -52,7 +76,8 @@ export function Services() {
         const servicesWithIds: Service[] = received.map((p, i) => ({
           id: p.id,
           title: p.title,
-          details: p.details,
+          description: p.details,
+          icon: p.icon,
           createdAt: p.createdAt,
         }));
   
@@ -66,7 +91,7 @@ export function Services() {
     };
 	return (
 		<section id="services" className="py-20 w-full h-full relative overflow-hidden">
-			<div className="absolute inset-0 bg-black -z-10 opacity-85"></div>
+			<div className="absolute inset-0 bg-black -z-10 opacity-10"></div>
 
 			<div className="mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="text-center mb-12">
@@ -81,18 +106,17 @@ export function Services() {
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 					{services.map((service, index) => {
 						return (
-							<div
-								key={index}
-								className="inline-flex justify-center text-center p-6 hover:bg-white/10 transition-colors duration-300"
-							>
-								<h3 className={`mb-3 tracking-wide text-white ${myFont.className}`}>
-									{service.title}
-								</h3>
-                <a href={`/services/${encodeURIComponent(service.title)}`} className="hover:opacity-70 transition">
-                <ArrowRight className="w-6 h-6 text-gray-100" />
-                </a>
-
-							</div>
+							<GlossyCard
+          key={service.id}
+          title={service.title}
+          icon={<ServiceIcon name={service.icon} size={28} />}
+          accentColor="#b16707" // Your brand gold color
+        >
+          <a href={`/services/${encodeURIComponent(service.title)}`} className="text-gray-200 hover:underline flex items-center justify-between">
+            <span>Learn More</span>
+            <ArrowRight size={16} className="ml-2" />
+          </a>
+        </GlossyCard>
 						);
 					})}
 				</div>

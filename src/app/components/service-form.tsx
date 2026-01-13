@@ -1,29 +1,30 @@
+// src/components/service-form.tsx
+'use client';
+
 import { useState } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Label } from './ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { IconPicker } from './IconPicker';
 import { toast } from 'sonner';
-import { projectId, publicAnonKey } from '../../../utils/supabase/info';
+import { projectId, publicAnonKey } from '../../../utils/supabase/info'
 
-const API_BASE =
-  (process.env.NEXT_PUBLIC_API_URL as string) ||
-  (typeof window !== "undefined" ? window.location.origin : "");
-
-interface ProjectFormProps {
+interface ServiceFormProps {
   onProjectCreated: () => void;
 }
 
-export function ServiceForm({ onProjectCreated }: ProjectFormProps) {
+export function ServiceForm({ onProjectCreated }: ServiceFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');
+  const [icon, setIcon] = useState('star');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!title.trim() || !details.trim()) {
+    if (!title.trim() || !details.trim() || !icon.trim()) {
       toast.error('Please fill in all fields');
       return;
     }
@@ -34,6 +35,7 @@ export function ServiceForm({ onProjectCreated }: ProjectFormProps) {
       const formData = new FormData();
       formData.append('title', title);
       formData.append('details', details);
+      formData.append('icon', icon);
 
       const response = await fetch(
         `https://${projectId}.supabase.co/functions/v1/hyper-function/services`,
@@ -57,30 +59,27 @@ export function ServiceForm({ onProjectCreated }: ProjectFormProps) {
             msg = err.error || err.message || JSON.stringify(err);
           } catch {}
         }
-        throw new Error(msg || 'Failed to create project');
+        throw new Error(msg || 'Failed to create service');
       }
 
-      // expect JSON response
       if (!contentType.includes('application/json')) {
         throw new Error('Expected JSON response from server: ' + raw.slice(0, 1000));
       }
 
       const data = JSON.parse(raw);
-      console.log('Project created successfully:', data);
+      console.log('Service created successfully:', data);
 
-      toast.success('Project created successfully!');
+      toast.success('Service created successfully!');
 
       // Reset form
       setTitle('');
       setDetails('');
-
-      const fileInput = document.getElementById('images') as HTMLInputElement;
-      if (fileInput) fileInput.value = '';
+      setIcon('star');
 
       onProjectCreated();
     } catch (error) {
-      console.error('Error creating project:', error);
-      toast.error(error instanceof Error ? error.message : 'Failed to create project');
+      console.error('Error creating service:', error);
+      toast.error(error instanceof Error ? error.message : 'Failed to create service');
     } finally {
       setIsSubmitting(false);
     }
@@ -89,19 +88,19 @@ export function ServiceForm({ onProjectCreated }: ProjectFormProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Create New Project</CardTitle>
+        <CardTitle>Create New Service</CardTitle>
         <CardDescription>
-          Add a new project with title, details, and images
+          Add a new service with title, details, and icon
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="title">Project Title</Label>
+            <Label htmlFor="title">Service Title</Label>
             <Input
               id="title"
               type="text"
-              placeholder="Enter project title"
+              placeholder="Enter service title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               disabled={isSubmitting}
@@ -110,10 +109,10 @@ export function ServiceForm({ onProjectCreated }: ProjectFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="details">Project Details</Label>
+            <Label htmlFor="details">Service Details</Label>
             <Textarea
               id="details"
-              placeholder="Enter project details..."
+              placeholder="Enter service details..."
               rows={6}
               value={details}
               onChange={(e) => setDetails(e.target.value)}
@@ -121,12 +120,15 @@ export function ServiceForm({ onProjectCreated }: ProjectFormProps) {
               required
             />
           </div>
+
+          <IconPicker value={icon} onChange={setIcon} />
+
           <Button
             type="submit"
             className="w-full"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Creating Project...' : 'Create Project'}
+            {isSubmitting ? 'Creating Service...' : 'Create Service'}
           </Button>
         </form>
       </CardContent>
