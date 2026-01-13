@@ -6,15 +6,15 @@ import { useProjects } from '../../../lib/hooks/useProjects';
 import { Project, PortfolioConfig } from '../../../lib/types/project';
 import { PortfolioCard } from './ProjectCard';
 import { ProjectModal } from './ProjectModal';
-import { AllProjectsView } from './AllProjectsView';
 import ServiceCarousel from './ServiceCarousel';
 import { myFont } from './MyFont';
 
 interface PortfolioSectionProps {
   config: PortfolioConfig;
+  onShowAll?: (projects: Project[]) => void; // Add this prop
 }
 
-export function Portfolio({ config }: PortfolioSectionProps) {
+export function Portfolio({ config, onShowAll }: PortfolioSectionProps) {
   const {
     source,
     sectionid,
@@ -26,7 +26,6 @@ export function Portfolio({ config }: PortfolioSectionProps) {
   } = config;
 
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [showAllProjects, setShowAllProjects] = useState(false);
   const [serviceFilter, setServiceFilter] = useState<string[]>([]);
 
   const { projects, isLoading, error } = useProjects({
@@ -41,6 +40,12 @@ export function Portfolio({ config }: PortfolioSectionProps) {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     position: 'relative',
+  };
+
+  const handleShowAll = () => {
+    if (onShowAll) {
+      onShowAll(projects);
+    }
   };
 
   return (
@@ -95,7 +100,7 @@ export function Portfolio({ config }: PortfolioSectionProps) {
           )}
 
           <button
-            onClick={() => setShowAllProjects(true)}
+            onClick={handleShowAll}
             className="inline-flex items-center gap-2 px-6 py-2.5 bg-black/80 backdrop-blur-sm text-white hover:bg-amber-700 transition-all duration-300 group rounded-lg border border-white/10 hover:border-amber-500/50 shadow-lg hover:shadow-amber-500/20"
           >
             <span className={`text-xs tracking-widest ${myFont.className}`}>
@@ -109,19 +114,13 @@ export function Portfolio({ config }: PortfolioSectionProps) {
         </div>
       </div>
 
-      {/* Modals */}
+      {/* Only Project Detail Modal - AllProjectsView removed */}
       {selectedProject && (
         <ProjectModal
           project={selectedProject}
           onClose={() => setSelectedProject(null)}
         />
       )}
-
-      <AllProjectsView
-        isOpen={showAllProjects}
-        onClose={() => setShowAllProjects(false)}
-        allProjects={projects}
-      />
     </section>
   );
 }
