@@ -140,22 +140,26 @@ font-style: normal;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
-/* Fixed brand title with proper gradient text */
+/* Fixed brand title with proper gradient text and responsive sizing */
 .brand-title {
-  font-size: clamp(2rem, 6vw, 4.5rem);
-  line-height: 1.1;
+  font-size: clamp(1.5rem, 8vw, 3rem);
+  line-height: 1.2;
   margin: 0 0 32px;
+  padding: 0 16px;
   font-weight: 700;
   letter-spacing: -0.02em;
   background: linear-gradient(90deg, #b16707ff 0%, #ccb532ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: #b16707; /* Fallback color for browsers that don't support gradient text */
-  text-shadow: none; /* Remove text shadow as it doesn't work well with gradient text */
+  color: #b16707;
+  text-shadow: none;
   position: relative;
   display: inline-block;
   animation: titleShine 3s ease-in-out infinite;
+  max-width: 100%;
+  word-wrap: break-word;
+  hyphens: manual;
 }
 
 /* Add a pseudo-element for the glow effect */
@@ -164,6 +168,7 @@ font-style: normal;
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
   z-index: -1;
   background: linear-gradient(90deg, #b16707ff 0%, #ccb532ff 100%);
   -webkit-background-clip: text;
@@ -172,6 +177,7 @@ font-style: normal;
   filter: blur(20px);
   opacity: 0.5;
   animation: titleGlow 3s ease-in-out infinite;
+  padding: 0 16px;
 }
 
 @keyframes titleShine {
@@ -198,6 +204,8 @@ font-style: normal;
   justify-content: center;
   gap: 24px;
   margin-top: 24px;
+  flex-wrap: wrap;
+  padding: 0 16px;
 }
 
 .brand-divider {
@@ -212,12 +220,13 @@ font-style: normal;
 }
 
 .brand-subtitle {
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-size: clamp(0.75rem, 3vw, 1.5rem);
   font-weight: 300;
   color: rgba(255, 255, 255, 0.9);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin: 0;
+  text-align: center;
 }
 
 /* About Content */
@@ -241,7 +250,7 @@ font-style: normal;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 600;
-  display: inline-block; /* Important for gradient text to work properly */
+  display: inline-block;
 }
 
 /* Stats Grid */
@@ -373,7 +382,112 @@ font-style: normal;
   font-size: 1rem;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.7);
+  margin: 0;
 }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .brand-banner {
+    padding: 60px 20px;
+    margin-bottom: 40px;
+  }
+
+  .brand-icon-wrapper {
+    width: 72px;
+    height: 72px;
+    margin-bottom: 20px;
+  }
+
+  .brand-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand-title {
+    font-size: clamp(1.5rem, 10vw, 3rem);
+    margin-bottom: 24px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .brand-subtitle-wrapper {
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .brand-divider {
+    width: 40px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .stat-card {
+    padding: 20px;
+  }
+
+  .about-description {
+    font-size: 1.1rem;
+  }
+
+  .about-content {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-banner {
+    padding: 40px 16px;
+  }
+
+  .brand-title {
+    font-size: clamp(1.25rem, 11vw, 2.5rem);
+    padding: 0 8px;
+    margin-bottom: 20px;
+  }
+
+  .brand-title::before {
+    padding: 0 8px;
+  }
+
+  .brand-icon-wrapper {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+  }
+
+  .brand-subtitle {
+    font-size: clamp(0.65rem, 3.5vw, 1rem);
+    letter-spacing: 0.05em;
+  }
+
+  .brand-subtitle-wrapper {
+    gap: 12px;
+  }
+
+  .brand-divider {
+    width: 30px;
+  }
+
+  .about-description {
+    font-size: 1rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+
+  .value-title {
+    font-size: 1.1rem;
+  }
+
+  .value-text {
+    font-size: 0.95rem;
+  }
+}
+
 /*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[12].use[3]!./src/app/components/GlossyCardComponent.css ***!
   \****************************************************************************************************************************************************************************************************************************************************************************************/

@@ -201,12 +201,6 @@ export function SeadekPortfolio() {
           onClose={() => setSelectedProject(null)}
         />
       )}
-
-      <AllProjectsView
-        isOpen={showAllProjects}
-        onClose={() => setShowAllProjects(false)}
-        allProjects={projects}
-      />
     </section>
   );
 }
