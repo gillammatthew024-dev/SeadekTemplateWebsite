@@ -16,17 +16,7 @@ export function About() {
             <div className="brand-icon-wrapper">
               <Sparkles className="brand-icon" size={48} />
             </div>
-            <h2 
-              className={`brand-title ${myFont.className}`}
-              style={{
-                background: 'linear-gradient(90deg, #b16707ff 0%, #ccb532ff 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                fontWeight: 700,
-                letterSpacing: '-0.02em',
-              }}
-            >
+            <h2 className={`brand-title ${myFont.className}`}>
               POLISH PERFECTION
             </h2>
             <div className="brand-subtitle-wrapper">

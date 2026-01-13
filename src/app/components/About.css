@@ -124,14 +124,38 @@
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
+/* Fixed brand title with proper gradient text */
 .brand-title {
   font-size: clamp(2rem, 6vw, 4.5rem);
   line-height: 1.1;
   margin: 0 0 32px;
-  text-shadow: 
-    0 4px 20px rgba(177, 103, 7, 0.3),
-    0 0 60px rgba(204, 181, 50, 0.2);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #b16707ff 0%, #ccb532ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: #b16707; /* Fallback color for browsers that don't support gradient text */
+  text-shadow: none; /* Remove text shadow as it doesn't work well with gradient text */
+  position: relative;
+  display: inline-block;
   animation: titleShine 3s ease-in-out infinite;
+}
+
+/* Add a pseudo-element for the glow effect */
+.brand-title::before {
+  content: 'POLISH PERFECTION';
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, #b16707ff 0%, #ccb532ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: blur(20px);
+  opacity: 0.5;
+  animation: titleGlow 3s ease-in-out infinite;
 }
 
 @keyframes titleShine {
@@ -140,6 +164,15 @@
   }
   50% {
     filter: brightness(1.2);
+  }
+}
+
+@keyframes titleGlow {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
   }
 }
 
@@ -192,6 +225,7 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 600;
+  display: inline-block; /* Important for gradient text to work properly */
 }
 
 /* Stats Grid */
@@ -323,34 +357,4 @@
   font-size: 1rem;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.7);
-  margin: 0;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .brand-banner {
-    padding: 60px 24px;
-  }
-
-  .brand-icon-wrapper {
-    width: 72px;
-    height: 72px;
-  }
-
-  .brand-icon {
-    width: 36px;
-    height: 36px;
-  }
-
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .stat-card {
-    padding: 20px;
-  }
-
-  .about-description {
-    font-size: 1.1rem;
-  }
 }
