@@ -1,7 +1,9 @@
 'use client';
+
 import { Menu, X, Instagram, Facebook, Linkedin } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
+
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -14,92 +16,138 @@ export function Header() {
   };
 
   return (
-    <header 
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b border-blue-200/30"
+    <header
+      className="
+        fixed top-0 left-0 right-0 z-50
+        backdrop-blur-xl
+        border-b border-white/10
+        shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]
+      "
       style={{
-        background: 'linear-gradient(135deg, #0c4a7e 0%, #1a6fa0 50%, #1e7ab3 100%)',
+        background:
+          'linear-gradient(135deg, #050505 0%, #111111 40%, #1c1c1c 100%)',
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 sm:h-20">
+
           {/* Logo */}
-          <div className="cursor-pointer flex items-center" onClick={() => scrollToSection('hero')}>
-            <div className="w-10 h-10 bg-white/20 flex items-center justify-center rounded">
-              <span className="text-white tracking-widest font-bold">P</span>
+          <div
+            onClick={() => scrollToSection('hero')}
+            className="flex items-center gap-3 cursor-pointer group"
+          >
+            <div className="
+              w-10 h-10 rounded-lg
+              bg-gradient-to-br from-white/20 to-white/5
+              border border-white/20
+              flex items-center justify-center
+              shadow-inner
+              group-hover:scale-105 transition
+            ">
+              <span className="text-white font-bold tracking-widest">P</span>
             </div>
-            <span className="ml-3 tracking-widest hidden sm:inline text-white font-semibold">PORTFOLIO</span>
+            <span className="
+              hidden sm:inline
+              text-white font-semibold tracking-[0.3em]
+              text-sm
+              opacity-90
+            ">
+              PORTFOLIO
+            </span>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8 items-center">
-            <button onClick={() => scrollToSection('about')} className="text-white/90 hover:text-white transition-colors font-medium">
-              About
-            </button>
-            <button onClick={() => scrollToSection('portfolio')} className="text-white/90 hover:text-white transition-colors font-medium">
-              Portfolio
-            </button>
-            <button onClick={() => scrollToSection('services')} className="text-white/90 hover:text-white transition-colors font-medium">
-              Services
-            </button>
-            <button onClick={() => scrollToSection('contact')} className="text-white/90 hover:text-white transition-colors font-medium">
-              Contact
-            </button>
+          <nav className="hidden md:flex items-center gap-10">
+            {['about', 'portfolio', 'services', 'contact'].map((item) => (
+              <button
+                key={item}
+                onClick={() => scrollToSection(item)}
+                className="
+                  relative text-white/80 font-medium
+                  hover:text-white transition
+                  after:absolute after:left-0 after:-bottom-1
+                  after:h-[2px] after:w-0
+                  after:bg-white after:transition-all
+                  hover:after:w-full
+                "
+              >
+                {item.charAt(0).toUpperCase() + item.slice(1)}
+              </button>
+            ))}
+
             <Link
-              href = "/checkout" 
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-semibold text-white shadow-2xl transition transform hover:brightness-105 active:translate-y-0.5"
-              style={{
-              background: 'linear-gradient(90deg,#2563eb 0%,#1e40af 100%)',
-            }}
+              href="/checkout"
+              className="
+                relative inline-flex items-center justify-center
+                px-7 py-3 rounded-full
+                font-semibold text-white
+                bg-gradient-to-r from-zinc-700 to-zinc-900
+                border border-white/10
+                shadow-[0_10px_30px_-10px_rgba(255,255,255,0.15)]
+                hover:brightness-110 transition
+              "
             >
               Get Quote
             </Link>
           </nav>
 
-          {/* Social Media Icons & Mobile Menu Button */}
+          {/* Right Side */}
           <div className="flex items-center gap-4">
-            {/* Social Icons - Hidden on mobile */}
+
+            {/* Social Icons */}
             <div className="hidden lg:flex items-center gap-4">
-              <a href="#" className="text-white/80 hover:text-white transition-colors" aria-label="Instagram">
-                <Instagram size={20} />
-              </a>
-              <a href="#" className="text-white/80 hover:text-white transition-colors" aria-label="Facebook">
-                <Facebook size={20} />
-              </a>
-              <a href="#" className="text-white/80 hover:text-white transition-colors" aria-label="LinkedIn">
-                <Linkedin size={20} />
-              </a>
+              {[Instagram, Facebook, Linkedin].map((Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="
+                    text-white/70 hover:text-white
+                    transition transform hover:scale-110
+                  "
+                >
+                  <Icon size={18} />
+                </a>
+              ))}
             </div>
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2 text-white"
+              className="md:hidden text-white p-2"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle menu"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Menu */}
         {isMenuOpen && (
-          <nav className="md:hidden py-4 border-t border-blue-200/30">
-            <div className="flex flex-col space-y-4">
-              <button onClick={() => scrollToSection('about')} className="text-white/90 hover:text-white transition-colors font-medium">
-                About
-              </button>
-              <button onClick={() => scrollToSection('portfolio')} className="text-white/90 hover:text-white transition-colors font-medium">
-                Portfolio
-              </button>
-              <button onClick={() => scrollToSection('services')} className="text-white/90 hover:text-white transition-colors font-medium">
-                Services
-              </button>
-              <button onClick={() => scrollToSection('contact')} className="text-white/90 hover:text-white transition-colors font-medium">
-                Contact
-              </button>
+          <nav
+            className="
+              md:hidden py-6
+              border-t border-white/10
+              bg-gradient-to-b from-black/90 to-zinc-900/90
+              backdrop-blur-xl
+            "
+          >
+            <div className="flex flex-col gap-5">
+              {['about', 'portfolio', 'services', 'contact'].map((item) => (
+                <button
+                  key={item}
+                  onClick={() => scrollToSection(item)}
+                  className="text-white/80 hover:text-white font-medium text-left"
+                >
+                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                </button>
+              ))}
+
               <Link
-                href = "checkout" 
-                className="px-6 py-2 bg-white text-blue-900 hover:bg-blue-50 transition-colors font-semibold rounded text-center"
+                href="/checkout"
+                className="
+                  mt-4 px-6 py-3 rounded-lg
+                  bg-white text-black font-semibold
+                  text-center hover:bg-zinc-200 transition
+                "
               >
                 Get Quote
               </Link>
