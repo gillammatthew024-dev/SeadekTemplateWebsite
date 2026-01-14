@@ -33,7 +33,6 @@ export function Header() {
 
           {/* Logo */}
           <div
-            onClick={() => scrollToSection('hero')}
             className="flex items-center gap-3 cursor-pointer group"
           >
             <div className="
@@ -44,7 +43,9 @@ export function Header() {
               shadow-inner
               group-hover:scale-105 transition
             ">
-              <span className="text-white font-bold tracking-widest">P</span>
+              <span className="text-white font-bold tracking-widest">
+                <Link href = "/">P</Link>
+                </span>
             </div>
             <span className="
               hidden sm:inline
