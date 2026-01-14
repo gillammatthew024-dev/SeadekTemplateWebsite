@@ -236,8 +236,9 @@ export function Portfolio({
                   {/* Button shine effect */}
                   <div className="absolute inset-0 -top-2 -left-2 w-[calc(100%+4px)] h-[calc(100%+4px)] bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
                   <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
-                  <span className={`relative text-xs sm:text-sm tracking-wider whitespace-nowrap ${myFont.className}`}>
-                    View All Projects
+                  <span className={`relative break-words text-xs sm:text-sm tracking-wider whitespace-nowrap ${myFont.className}`}>
+                    View All 
+                    Projects
                   </span>
                   <ArrowRight size={16} className="transition-transform group-hover:translate-x-1 sm:w-[18px] sm:h-[18px] flex-shrink-0" />
                 </motion.button>

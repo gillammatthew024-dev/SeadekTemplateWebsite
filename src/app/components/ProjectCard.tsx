@@ -49,7 +49,7 @@ export function PortfolioCard({ project, onClick }: PortfolioCardProps) {
 
           {/* Title */}
           <h3
-            className={`text-lg md:text-xl font-bold leading-tight mb-1.5 drop-shadow-2xl ${myFont.className}`}
+            className={`text-base md:text-lg font-bold leading-tight mb-1.5 drop-shadow-2xl ${myFont.className}`}
             style={{
               background:
                 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 25%, #ef4444 50%, #ec4899 75%, #a855f7 100%)',
