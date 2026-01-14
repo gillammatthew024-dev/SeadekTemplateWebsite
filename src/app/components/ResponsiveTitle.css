@@ -7,12 +7,27 @@
   );
   
   /* Ensure it fits on mobile */
-  font-size: min(4.2vw, 3rem);   /* Never exceed 8% of viewport width */
+  font-size: min(4vw, 3rem);   /* Never exceed 4% of viewport width */
 }
+.response-text {
+  /* Base + viewport width calculation */
+  font-size: clamp(
+    0.75rem,                    /* Minimum size */
+    calc(0.5rem + 1.5vw),        /* Preferred size */
+    2rem                        /* Maximum size */
+  );
+  
+  /* Ensure it fits on mobile */
+  font-size: min(1.5vw, 2rem);   /* Never exceed 4% of viewport width */
+}
+
 
 /* For specific breakpoints */
 @media (max-width: 360px) {
   .brand-title {
-    font-size: calc(100vw / 26); /* Divide viewport by character count */
+    font-size: calc(100vw / 28); /* Divide viewport by character count */
+  }
+  .responsive-text {
+    font-size: calc(100vw / 38); /* Divide viewport by character count */
   }
 }
