@@ -1,4 +1,3 @@
-// src/components/About.tsx
 'use client';
 
 import { myFont } from './MyFont';
@@ -16,7 +15,10 @@ export function About() {
             <div className="brand-icon-wrapper">
               <Sparkles className="brand-icon" size={48} />
             </div>
-            <h2 className={`brand-title ${myFont.className}`}>
+            <h2 
+              className={`brand-title ${myFont.className}`}
+              data-text="POLISH PERFECTION"
+            >
               POLISH PERFECTION
             </h2>
             <div className="brand-subtitle-wrapper">

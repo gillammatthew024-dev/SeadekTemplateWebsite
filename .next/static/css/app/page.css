@@ -140,9 +140,9 @@ font-style: normal;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
-/* Fixed brand title with proper gradient text and responsive sizing */
+/* FIXED: Brand title with proper text handling */
 .brand-title {
-  font-size: clamp(1.5rem, 8vw, 3rem);
+  font-size: clamp(1.75rem, 6vw, 3rem);
   line-height: 1.2;
   margin: 0 0 32px;
   padding: 0 16px;
@@ -155,16 +155,23 @@ font-style: normal;
   color: #b16707;
   text-shadow: none;
   position: relative;
-  display: inline-block;
+  display: block;
   animation: titleShine 3s ease-in-out infinite;
   max-width: 100%;
-  word-wrap: break-word;
-  hyphens: manual;
+  
+  /* KEY FIXES: Prevent mid-word breaks */
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  white-space: normal;
+  text-wrap: balance; /* Modern CSS for balanced text */
 }
 
 /* Add a pseudo-element for the glow effect */
 .brand-title::before {
-  content: 'POLISH PERFECTION';
+  content: attr(data-text);
   position: absolute;
   top: 0;
   left: 0;
@@ -217,16 +224,21 @@ font-style: normal;
     rgba(204, 181, 50, 0.6) 50%,
     transparent 100%
   );
+  flex-shrink: 0;
 }
 
 .brand-subtitle {
-  font-size: clamp(0.75rem, 3vw, 1.5rem);
+  font-size: clamp(0.7rem, 2.5vw, 1.25rem);
   font-weight: 300;
   color: rgba(255, 255, 255, 0.9);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   margin: 0;
   text-align: center;
+  /* Prevent mid-word breaks */
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
 }
 
 /* About Content */
@@ -235,13 +247,18 @@ font-style: normal;
 }
 
 .about-description {
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 3vw, 1.25rem);
   line-height: 1.8;
   color: rgba(255, 255, 255, 0.85);
   text-align: center;
   max-width: 900px;
   margin: 0 auto 60px;
   font-weight: 300;
+  /* Allow natural word wrapping only */
+  word-break: normal;
+  overflow-wrap: anywhere; /* Only break if absolutely necessary */
+  hyphens: auto; /* Enable proper hyphenation */
+  -webkit-hyphens: auto;
 }
 
 .brand-highlight {
@@ -250,13 +267,14 @@ font-style: normal;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 600;
-  display: inline-block;
+  display: inline;
+  white-space: nowrap; /* Keep "Polish Perfection" together */
 }
 
 /* Stats Grid */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 24px;
   margin-bottom: 60px;
 }
@@ -275,6 +293,7 @@ font-style: normal;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   transition: all 0.3s ease;
+  min-width: 0; /* Fix flex overflow */
 }
 
 .stat-card:hover {
@@ -314,10 +333,11 @@ font-style: normal;
 
 .stat-content {
   flex: 1;
+  min-width: 0; /* Fix flex overflow */
 }
 
 .stat-number {
-  font-size: 2.5rem;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
   font-weight: 800;
   background: linear-gradient(90deg, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
   -webkit-background-clip: text;
@@ -325,14 +345,16 @@ font-style: normal;
   background-clip: text;
   line-height: 1;
   margin-bottom: 8px;
+  white-space: nowrap;
 }
 
 .stat-label {
-  font-size: 0.9rem;
+  font-size: clamp(0.75rem, 2vw, 0.9rem);
   color: rgba(255, 255, 255, 0.6);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 /* Values Grid */
@@ -372,30 +394,35 @@ font-style: normal;
 }
 
 .value-title {
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 3vw, 1.25rem);
   font-weight: 600;
   color: white;
   margin: 0 0 8px;
+  word-break: normal;
 }
 
 .value-text {
-  font-size: 1rem;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.7);
   margin: 0;
+  word-break: normal;
+  overflow-wrap: anywhere;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .brand-banner {
-    padding: 60px 20px;
+    padding: 48px 16px;
     margin-bottom: 40px;
+    border-radius: 24px;
   }
 
   .brand-icon-wrapper {
     width: 72px;
     height: 72px;
     margin-bottom: 20px;
+    border-radius: 18px;
   }
 
   .brand-icon {
@@ -404,19 +431,25 @@ font-style: normal;
   }
 
   .brand-title {
-    font-size: clamp(1.5rem, 10vw, 3rem);
-    margin-bottom: 24px;
+    font-size: clamp(1.5rem, 7vw, 2.5rem);
+    margin-bottom: 20px;
     line-height: 1.3;
     letter-spacing: -0.01em;
+    padding: 0 8px;
   }
 
   .brand-subtitle-wrapper {
-    gap: 16px;
-    margin-top: 20px;
+    gap: 12px;
+    margin-top: 16px;
   }
 
   .brand-divider {
-    width: 40px;
+    width: 30px;
+  }
+
+  .brand-subtitle {
+    font-size: clamp(0.6rem, 2.5vw, 0.9rem);
+    letter-spacing: 0.05em;
   }
 
   .stats-grid {
@@ -428,66 +461,101 @@ font-style: normal;
     padding: 20px;
   }
 
-  .about-description {
-    font-size: 1.1rem;
+  .about-content {
+    padding: 0 12px;
   }
 
-  .about-content {
-    padding: 0 16px;
+  .value-item {
+    gap: 16px;
   }
 }
 
 @media (max-width: 480px) {
   .brand-banner {
-    padding: 40px 16px;
+    padding: 36px 12px;
+    border-radius: 20px;
   }
 
   .brand-title {
-    font-size: clamp(1.25rem, 11vw, 2.5rem);
-    padding: 0 8px;
-    margin-bottom: 20px;
-  }
-
-  .brand-title::before {
-    padding: 0 8px;
-  }
-
-  .brand-icon-wrapper {
-    width: 64px;
-    height: 64px;
+    font-size: clamp(1.25rem, 8vw, 2rem);
+    padding: 0 4px;
     margin-bottom: 16px;
   }
 
-  .brand-subtitle {
-    font-size: clamp(0.65rem, 3.5vw, 1rem);
-    letter-spacing: 0.05em;
+  .brand-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+  }
+
+  .brand-icon {
+    width: 30px;
+    height: 30px;
   }
 
   .brand-subtitle-wrapper {
-    gap: 12px;
+    gap: 8px;
   }
 
   .brand-divider {
-    width: 30px;
+    width: 20px;
   }
 
-  .about-description {
-    font-size: 1rem;
+  .brand-subtitle {
+    font-size: clamp(0.55rem, 2.8vw, 0.75rem);
   }
 
-  .stat-number {
-    font-size: 2rem;
+  .stat-icon-wrapper {
+    width: 52px;
+    height: 52px;
   }
 
   .value-title {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .value-text {
-    font-size: 0.95rem;
+    font-size: 0.875rem;
   }
 }
 
+/* Extra small screens */
+@media (max-width: 360px) {
+  .brand-title {
+    font-size: 0.9rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.55rem;
+  }
+
+  .brand-divider {
+    display: none;
+  }
+}
+
+/*!************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[12].use[3]!./src/app/components/ResponsiveTitle.css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************/
+.brand-title {
+  /* Base + viewport width calculation */
+  font-size: clamp(
+    1.25rem,                    /* Minimum size */
+    calc(1.25rem + 3vw),        /* Preferred size */
+    3rem                        /* Maximum size */
+  );
+  
+  /* Ensure it fits on mobile */
+  font-size: min(4.5vw, 3rem);   /* Never exceed 8% of viewport width */
+}
+
+/* For specific breakpoints */
+@media (max-width: 360px) {
+  .brand-title {
+    font-size: calc(100vw / 12); /* Divide viewport by character count */
+  }
+}
 /*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[12].use[3]!./src/app/components/GlossyCardComponent.css ***!
   \****************************************************************************************************************************************************************************************************************************************************************************************/

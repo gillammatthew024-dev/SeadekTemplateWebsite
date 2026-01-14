@@ -9,62 +9,39 @@ import { Services } from './components/Services';
 import Hero3DBackground from './components/Hero3DBackground';
 import BubbleWrapper from './components/BubbleWrapper';
 import { AllProjectsView } from './components/AllProjectsView';
-import { ProjectModal } from './components/ProjectModal';
 import { useState } from 'react';
 import { Project } from '../../lib/types/project';
+import { ProjectModal } from './components/ProjectModal';
 
 export default function Home() {
   const [showMainPortfolio, setShowMainPortfolio] = useState(false);
   const [showSeadekPortfolio, setShowSeadekPortfolio] = useState(false);
   const [mainProjects, setMainProjects] = useState<Project[]>([]);
   const [seadekProjects, setSeadekProjects] = useState<Project[]>([]);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-
-  // Handler for card clicks from main portfolio
-  const handleMainPortfolioCardClick = (project: Project) => {
-    setSelectedProject(project);
-  };
-
-  // Handler for card clicks from seadek portfolio
-  const handleSeadekPortfolioCardClick = (project: Project) => {
-    setSelectedProject(project);
-  };
-
-  // Handler to close the project modal
-  const handleCloseProjectModal = () => {
-    setSelectedProject(null);
-  };
+   const [project, setSelectedProject] = useState<Project | null>(null);
 
   return (
     <>
-      {/* Render ALL modals at root level */}
+      {/* Render modals at root level, outside of any wrappers */}
       <AllProjectsView
         isOpen={showMainPortfolio}
         onClose={() => setShowMainPortfolio(false)}
+        onClickProject={(project) => setSelectedProject(project)}
         allProjects={mainProjects}
-        onProjectClick={(project) => {
-          setSelectedProject(project);
-          setShowMainPortfolio(false);
-        }}
       />
       
       <AllProjectsView
         isOpen={showSeadekPortfolio}
         onClose={() => setShowSeadekPortfolio(false)}
+        onClickProject={(project) => setSelectedProject(project)}
         allProjects={seadekProjects}
-        onProjectClick={(project) => {
-          setSelectedProject(project);
-          setShowSeadekPortfolio(false);
-        }}
       />
-
-      {/* Project Detail Modal - at root level */}
-      {selectedProject && (
-        <ProjectModal
-          project={selectedProject}
-          onClose={handleCloseProjectModal}
-        />
-      )}
+      {project && (
+              <ProjectModal
+                project={project}
+                onClose={() => setSelectedProject(null)}
+              />
+            )}
 
       <div className="min-h-screen">
         <Hero3DBackground>
@@ -102,8 +79,7 @@ export default function Home() {
                   setMainProjects(projects);
                   setShowMainPortfolio(true);
                 }}
-                onClickCard={handleMainPortfolioCardClick}
-                selectedProject={selectedProject}
+                onClickCard={(project) => setSelectedProject(project)}
               />
             </BubbleWrapper>
           </section>
@@ -132,8 +108,7 @@ export default function Home() {
                   setSeadekProjects(projects);
                   setShowSeadekPortfolio(true);
                 }}
-                onClickCard={handleSeadekPortfolioCardClick}
-                selectedProject={selectedProject}
+                onClickCard={(project) => setSelectedProject(project)}
               />
             </BubbleWrapper>
           </section>

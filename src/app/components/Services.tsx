@@ -7,6 +7,7 @@ import { projectId, publicAnonKey } from '../../../utils/supabase/info';
 import { myFont } from './MyFont';
 import { ServiceIcon } from './ServiceIcon';
 import GlossyCard from './GlossyCardComponent';
+import './ResponsiveTitle.css';
 
 interface Service {
   id: string;
@@ -114,7 +115,7 @@ export function Services() {
   return (
     <section 
       id="services" 
-      className="relative min-h-screen py-16 sm:py-20 lg:py-24 overflow-hidden"
+      className="relative overflow-hidden"
     >
       {/* Modern gradient background */}
       <div className="absolute inset-0 -z-10">
@@ -139,7 +140,7 @@ export function Services() {
             <span className="text-xs sm:text-sm font-medium text-amber-500">Our Expertise</span>
           </div>
           
-          <h2 className={`text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 ${myFont.className}`}>
+          <h2 className={`brand-title text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 ${myFont.className}`}>
             <span className="bg-gradient-to-r from-amber-400 via-orange-500 to-amber-600 bg-clip-text text-transparent break-words">
               Services
             </span>
