@@ -47,7 +47,10 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
-      <Hero3DBackground>
+      <Hero3DBackground
+      modelPath = "../../models/mclaren/scene.gltf"
+        modelType = "gltf"
+      >
         <Header />
         
         <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">

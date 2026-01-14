@@ -44,10 +44,11 @@ export default function Home() {
             )}
 
       <div className="min-h-screen">
-        <Hero3DBackground>
+        <Hero3DBackground
+        modelPath = "/mclaren/scene.gltf"
+        modelType = "gltf">
           {/* Header stays at top */}
           <Header />
-          
           {/* About Section */}
           <section className="relative z-10 px-4 md:px-8 lg:px-16 py-16">
             <BubbleWrapper variant="subtle" size="large">
