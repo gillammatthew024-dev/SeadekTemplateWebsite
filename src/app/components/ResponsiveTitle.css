@@ -7,12 +7,12 @@
   );
   
   /* Ensure it fits on mobile */
-  font-size: min(4.5vw, 3rem);   /* Never exceed 8% of viewport width */
+  font-size: min(4.2vw, 3rem);   /* Never exceed 8% of viewport width */
 }
 
 /* For specific breakpoints */
 @media (max-width: 360px) {
   .brand-title {
-    font-size: calc(100vw / 30); /* Divide viewport by character count */
+    font-size: calc(100vw / 26); /* Divide viewport by character count */
   }
 }
