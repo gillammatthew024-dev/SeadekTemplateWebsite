@@ -6,6 +6,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import './Hero3DBackground.css';
+import { loadDracoModel } from './Loaders/DracoGLTFLoader';
 
 interface Hero3DBackgroundProps {
   children: ReactNode;
@@ -79,8 +80,8 @@ export default function Hero3DBackground({
         scene.remove(model);
         model = loadedModel;
 
-// Scale it first
-  model.scale.set(0.01, 0.01, 0.01);
+        // Scale it first
+        model.scale.set(0.01, 0.01, 0.01);
 
 // Compute bounding box AFTER scaling
         const box = new THREE.Box3().setFromObject(model);
@@ -261,15 +262,8 @@ async function loadModel(path: string, type: string): Promise<THREE.Group | THRE
   switch (type) {
     case 'gltf':
     case 'glb':
-      const gltfLoader = new GLTFLoader();
-      return new Promise((resolve, reject) =>
-        gltfLoader.load(
-          path,
-          (gltf) => resolve(gltf.scene),
-          undefined,
-          (err) => reject(err)
-        )
-      );
+      // Use our Draco loader for GLTF/GLB
+      return loadDracoModel(path);
     case 'fbx':
       const fbxLoader = new FBXLoader();
       return new Promise((resolve, reject) =>

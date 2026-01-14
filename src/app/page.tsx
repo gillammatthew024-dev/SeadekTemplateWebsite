@@ -45,8 +45,8 @@ export default function Home() {
 
       <div className="min-h-screen">
         <Hero3DBackground
-        modelPath = "/mclaren/scene.gltf"
-        modelType = "gltf">
+        modelPath = "/mclaren/output-draco.glb"
+        modelType = "glb">
           {/* Header stays at top */}
           <Header />
           {/* About Section */}

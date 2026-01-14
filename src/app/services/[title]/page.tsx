@@ -48,8 +48,8 @@ export default async function Page({ params }: PageProps) {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
       <Hero3DBackground
-      modelPath = "../../models/mclaren/scene.gltf"
-        modelType = "gltf"
+      modelPath = "../../mclaren/output-draco.glb"
+        modelType = "glb"
       >
         <Header />
         
