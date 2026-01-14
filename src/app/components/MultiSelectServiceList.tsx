@@ -83,7 +83,7 @@ export function MultiSelectServiceList({
   }
 
   return (
-    <Card className="w-full max-w-md p-2 bg-gradient-to-r from-black via-gray-900 to-blue-900 -z-10 opacity-60">
+    <Card className="w-full p-2 bg-gradient-to-r from-black via-gray-900 to-blue-900 -z-10 opacity-60">
       <CardContent className="space-y-3">
 
         <Input
@@ -91,8 +91,8 @@ export function MultiSelectServiceList({
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-
-        <div className="space-y-2 max-h-72 overflow-y-auto">
+        <div className = "flex justify-center items-center">
+        <div className="space-y-2 max-h-72 flex flex-col overflow-y-auto">
           {filtered.map((service) => (
             <label
               key={service.id ?? service.title}
@@ -115,6 +115,7 @@ export function MultiSelectServiceList({
               No services found
             </p>
           )}
+        </div>
         </div>
 
       </CardContent>
