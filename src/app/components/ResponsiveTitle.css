@@ -13,6 +13,6 @@
 /* For specific breakpoints */
 @media (max-width: 360px) {
   .brand-title {
-    font-size: calc(100vw / 12); /* Divide viewport by character count */
+    font-size: calc(100vw / 30); /* Divide viewport by character count */
   }
 }
