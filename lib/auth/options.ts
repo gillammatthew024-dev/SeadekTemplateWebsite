@@ -4,6 +4,9 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 
 export const authOptions: NextAuthOptions = {
+  ...(process.env.NEXTAUTH_URL && { 
+    url: process.env.NEXTAUTH_URL 
+  }),
   providers: [
     CredentialsProvider({
       name: 'credentials',
