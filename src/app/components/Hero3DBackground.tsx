@@ -2,9 +2,9 @@
 // src/components/Hero3DBackground.tsx
 import { useRef, useEffect, ReactNode } from 'react';
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
+import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import './Hero3DBackground.css';
 import { loadDracoModel } from './Loaders/DracoGLTFLoader';
 

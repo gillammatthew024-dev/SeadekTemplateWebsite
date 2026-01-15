@@ -45,16 +45,3 @@ declare module 'three/examples/jsm/loaders/OBJLoader' {
     ): void;
   }
 }
-declare module 'three/examples/jsm/loaders/DRACOLoader' {
-  import { Loader, LoadingManager, Group } from 'three';
-  
-  export class DRACOLoader extends Loader {
-    constructor(manager?: LoadingManager);
-    load(
-      url: string,
-      onLoad: (object: Group) => void,
-      onProgress?: (event: ProgressEvent) => void,
-      onError?: (event: ErrorEvent) => void
-    ): void;
-  }
-}
