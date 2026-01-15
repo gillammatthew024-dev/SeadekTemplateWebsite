@@ -13,7 +13,7 @@ export async function GET(
   const config = getEndpointConfig(source);
 
   if (!config) {
-    return NextResponse.json({ error: 'Invalid source' }, { status: 400 });
+    return NextResponse.json({ error: 'Invalid source issue 1' }, { status: 400 });
   }
 
   if (!validateOrigin(request))
