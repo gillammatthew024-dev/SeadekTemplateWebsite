@@ -6,12 +6,17 @@ import { PartnershipBanner } from './components/PartnershipBanner';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { Services } from './components/Services';
-import Hero3DBackground from './components/Hero3DBackground';
 import BubbleWrapper from './components/BubbleWrapper';
 import { AllProjectsView } from './components/AllProjectsView';
 import { useState } from 'react';
 import { Project } from '../../lib/types/project';
 import { ProjectModal } from './components/ProjectModal';
+import dynamic from 'next/dynamic';
+
+const Hero3DBackground = dynamic(
+  () => import('./components/Hero3DBackground'),
+  { ssr: false }
+);
 
 export default function Home() {
   const [showMainPortfolio, setShowMainPortfolio] = useState(false);

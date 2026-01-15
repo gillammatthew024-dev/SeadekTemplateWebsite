@@ -14,10 +14,10 @@ const API_BASE =
 
 interface ProjectFormProps {
   onProjectCreated: () => void;
-  targetTable?: 'make-server-be0083bc' | 'clever-responder';
+  targetTable?: 'main-portfolio' | 'seadek-portfolio';
 }
 
-export function ProjectForm({ onProjectCreated, targetTable = 'make-server-be0083bc' }: ProjectFormProps) {
+export function ProjectForm({ onProjectCreated, targetTable = 'main-portfolio' }: ProjectFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');

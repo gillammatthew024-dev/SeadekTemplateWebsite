@@ -9,6 +9,17 @@
   /* Ensure it fits on mobile */
   font-size: min(4vw, 3rem);   /* Never exceed 4% of viewport width */
 }
+.brand-title-medium {
+  /* Base + viewport width calculation */
+  font-size: clamp(
+    1.1rem,                    /* Minimum size */
+    calc(1.1rem + 2.2vw),        /* Preferred size */
+    2.5rem                        /* Maximum size */
+  );
+  
+  /* Ensure it fits on mobile */
+  font-size: min(3vw, 3rem);   /* Never exceed 4% of viewport width */
+}
 .response-text {
   /* Base + viewport width calculation */
   font-size: clamp(

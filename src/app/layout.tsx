@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './styles/index.css'; // or your index.css
+import {Provider} from './providers';
 
 export const metadata: Metadata = {
   title: 'Polish Perfection',
@@ -17,7 +18,9 @@ export default function RootLayout({
         {/* fonts, meta, etc. auto-included */}
       </head>
       <body className="antialiased">
-        {children}
+        <Provider>
+          {children}
+        </Provider>
       </body>
     </html>
   );

@@ -1,26 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getEndpointConfig } from '../../../../../lib/config/endpoints';
+import { needsAdmin } from '../../../../../lib/auth/getSession';
+import { validateOrigin } from '../../../../../lib/auth/validateOrigin';
 
+
+// ✅ GET - Public (no auth required)
 export async function GET(
   request: NextRequest,
   { params }: { params: { source: string } }
 ) {
   const { source } = params;
-  
-  // Validate source
   const config = getEndpointConfig(source);
-  
+
   if (!config) {
-    return NextResponse.json(
-      { error: 'Invalid source' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Invalid source' }, { status: 400 });
+  }
+
+  if (!validateOrigin(request))
+  {
+    return NextResponse.json({ error: 'Invalid source' }, { status: 400 });
   }
 
   try {
-    const res = await fetch(config.url, {
+    const res = await fetch(`${config.url}/projects`, {
       headers: config.headers,
-      // Cache for 60 seconds on the server
       next: { revalidate: 60 },
     });
 
@@ -34,11 +37,7 @@ export async function GET(
     }
 
     const data = await res.json();
-    
-    // Normalize the data structure
-    const projects = normalizeProjects(data.projects || []);
-
-    return NextResponse.json({ projects });
+    return NextResponse.json(data);
   } catch (error) {
     console.error(`Error fetching from ${source}:`, error);
     return NextResponse.json(
@@ -48,16 +47,60 @@ export async function GET(
   }
 }
 
-function normalizeProjects(raw: any[]): any[] {
-  return raw.map((p, i) => ({
-    id: typeof p.id === 'string' && p.id ? p.id : `fallback-${i}`,
-    title: p.title ?? '',
-    description: p.description ?? '',
-    details: p.details ?? '',
-    imageUrls: Array.isArray(p.imageUrls)
-      ? p.imageUrls
-      : p.gallery ?? p.image_urls ?? p.images ?? [],
-    createdAt: p.createdAt ?? p.created_at ?? new Date().toISOString(),
-    services: p.services || p.service_keys || p.services_titles || [],
-  }));
+// ✅ POST - Protected (requires auth + signature)
+export async function POST(
+  request: NextRequest,
+  { params }: { params: { source: string } }
+) {
+  try {
+    if (!needsAdmin())
+    {
+      throw Error;
+    }
+
+    const { source } = params;
+    const config = getEndpointConfig(source);
+
+    if (!config) {
+      return NextResponse.json({ error: 'Invalid source' }, { status: 400 });
+    }
+
+    const formData = await request.formData();
+
+    // Extract data for signature
+    const signatureBody = {
+      title: formData.get('title'),
+      details: formData.get('details'),
+      services: formData.getAll('services'),
+      imageCount: formData.getAll('images').length,
+    };
+
+    const timestamp = Date.now.toString();
+
+    const response = await fetch(`${config.url}/projects`, {
+      method: 'POST',
+      headers: {
+        ...config.headers,
+        'X-Timestamp': timestamp,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Upload error:', errorText);
+      return NextResponse.json(
+        { error: 'Failed to create project' },
+        { status: response.status }
+      );
+    }
+
+    return NextResponse.json(await response.json());
+  } catch (error) {
+    console.error('Error creating project:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
 }

@@ -1,87 +1,52 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { ScrollArea } from './ui/scroll-area';
-import { projectId, publicAnonKey } from '../../../utils/supabase/info';
-import { createClient } from '@supabase/supabase-js';
-const API_BASE =
-  (process.env.NEXT_PUBLIC_API_URL as string) ||
-  (typeof window !== 'undefined' ? window.location.origin : '');
 
 interface Service {
-  id: bigint;
+  id: string;
   title: string;
   details: string;
   createdAt: string;
 }
-export function ServiceList() {
+
+interface ServiceListProps {
+  targetSource?: string;
+}
+
+export function ServiceList({ targetSource = 'hyper-function' }: ServiceListProps) {
+  const { data: session } = useSession();
   const [services, setServices] = useState<Service[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
 
   useEffect(() => {
     fetchServices();
-  }, []);
-  
-  const deleteProduct = async (id: bigint) => {
-    console.log(id);
-    try {
-      const res = await fetch(
-   `https://${projectId}.supabase.co/functions/v1/hyper-function/services/${id}`,
-    {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${publicAnonKey}`,
-    },
-  }
-);      if (!res.ok) {
-        throw new Error("Failed deleting project");
-      }
-  } catch (err) {
-      console.error('Error deleting project:', err);
-    }
-  };
+  }, [targetSource]);
 
   const fetchServices = async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const res = await fetch(
-   `https://${projectId}.supabase.co/functions/v1/hyper-function/services`,
-    {
-      headers: {
-        'Authorization': `Bearer ${publicAnonKey}`,
-    },
-  }
-);
-      const contentType = res.headers.get('content-type') || '';
-      const raw = await res.text();
-
+      // ✅ Call Next.js API route (public GET)
+      const res = await fetch(`/api/services/${targetSource}`);
+      
       if (!res.ok) {
-        let msg = raw;
-        if (contentType.includes('application/json')) {
-          try {
-            const parsed = JSON.parse(raw);
-            msg = parsed.error || parsed.message || JSON.stringify(parsed);
-          } catch {}
-        }
-        throw new Error(`Server error (${res.status}): ${msg}`);
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || `Server error (${res.status})`);
       }
 
-      if (!contentType.includes('application/json')) {
-        throw new Error('Expected JSON response but received: ' + raw.slice(0, 1000));
-      }
-
-      const data = JSON.parse(raw);
+      const data = await res.json();
       const received: any[] = data.services || [];
 
-      const servicesWithIds: Service[] = received.map((p, i) => ({
-        id: p.id, 
-        title: p.title ?? '',
-        details: p.details ?? '',
-        imageUrls: Array.isArray(p.imageUrls) ? p.imageUrls : (p.image_urls || p.images || []),
-        createdAt: p.createdAt ?? p.created_at ?? new Date().toISOString(),
+      const servicesWithIds: Service[] = received.map((s) => ({
+        id: String(s.id),
+        title: s.title ?? '',
+        details: s.details ?? s.description ?? '',
+        createdAt: s.createdAt ?? s.created_at ?? new Date().toISOString(),
       }));
 
       setServices(servicesWithIds);
@@ -93,12 +58,49 @@ export function ServiceList() {
     }
   };
 
+  const deleteService = async (id: string) => {
+    if (!session) {
+      setError('You must be logged in to delete services');
+      return;
+    }
+
+    if (!confirm('Are you sure you want to delete this service?')) {
+      return;
+    }
+
+    setDeleteLoading(id);
+    setError(null);
+
+    try {
+      // ✅ Call Next.js API route (protected DELETE)
+      const res = await fetch(`/api/services/${targetSource}/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to delete service');
+      }
+
+      // Remove from local state
+      setServices((prev) => prev.filter((s) => s.id !== id));
+    } catch (err) {
+      console.error('Error deleting service:', err);
+      setError(err instanceof Error ? err.message : 'Failed to delete service');
+    } finally {
+      setDeleteLoading(null);
+    }
+  };
+
+  const isAdmin = session?.user?.role === 'admin';
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Recent Services</CardTitle>
         <CardDescription>
           View all uploaded services
+          {!isAdmin && ' (Login to manage)'}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -110,8 +112,14 @@ export function ServiceList() {
           )}
 
           {error && (
-            <div className="rounded-lg bg-red-50 p-4">
+            <div className="rounded-lg bg-red-50 p-4 mb-4">
               <p className="text-sm text-red-800">{error}</p>
+              <button
+                onClick={() => setError(null)}
+                className="text-red-600 text-sm underline mt-1"
+              >
+                Dismiss
+              </button>
             </div>
           )}
 
@@ -121,21 +129,35 @@ export function ServiceList() {
             </div>
           )}
 
-          {!isLoading && !error && services.length > 0 && (
+          {!isLoading && services.length > 0 && (
             <div className="space-y-4">
-              {services.map((project) => (
+              {services.map((service) => (
                 <div
-                  key={project.id}
+                  key={service.id}
                   className="rounded-lg border bg-white p-4 shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <h3 className="font-semibold text-lg mb-2">{project.title}</h3>
-                  <button className="text-red-500 text-lg font-bold bg-transparent hover:bg-red-500 hover:text-white rounded px-2 py-1 transition" aria-label="Delete" onClick={() => deleteProduct(project.id)}> &times;</button>
+                  <div className="flex justify-between items-start">
+                    <h3 className="font-semibold text-lg mb-2">{service.title}</h3>
+
+                    {/* ✅ Only show delete button for admin users */}
+                    {isAdmin && (
+                      <button
+                        className="text-red-500 text-lg font-bold bg-transparent hover:bg-red-500 hover:text-white rounded px-2 py-1 transition disabled:opacity-50"
+                        aria-label="Delete"
+                        onClick={() => deleteService(service.id)}
+                        disabled={deleteLoading === service.id}
+                      >
+                        {deleteLoading === service.id ? '...' : '×'}
+                      </button>
+                    )}
+                  </div>
+
                   <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                    {project.details}
+                    {service.details}
                   </p>
-                  
+
                   <p className="text-xs text-gray-500">
-                    Created: {new Date(project.createdAt).toLocaleString()}
+                    Created: {new Date(service.createdAt).toLocaleString()}
                   </p>
                 </div>
               ))}

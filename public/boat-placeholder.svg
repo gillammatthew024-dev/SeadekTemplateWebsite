@@ -1,0 +1,7 @@
+<!-- public/boat-placeholder.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" fill="none">
+  <path d="M30 60 L170 60 L150 80 L50 80 Z" fill="#ffffff" stroke="#333" stroke-width="2"/>
+  <path d="M80 60 L80 30 L120 30 L120 60" fill="#ffffff" stroke="#333" stroke-width="2"/>
+  <path d="M100 30 L100 10" stroke="#333" stroke-width="2"/>
+  <circle cx="100" cy="10" r="3" fill="#ff0000"/>
+</svg>

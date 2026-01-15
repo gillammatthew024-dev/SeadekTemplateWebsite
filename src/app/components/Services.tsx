@@ -3,7 +3,6 @@
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { projectId, publicAnonKey } from '../../../utils/supabase/info';
 import { myFont } from './MyFont';
 import { ServiceIcon } from './ServiceIcon';
 import GlossyCard from './GlossyCardComponent';
@@ -20,6 +19,11 @@ interface Service {
 interface ServicesProps {
   services: Service[];
 }
+
+// API base URL
+const API_BASE =
+  (process.env.NEXT_PUBLIC_API_URL as string) ||
+  (typeof window !== 'undefined' ? window.location.origin : '');
 
 // Separated ServicesList component for better organization
 export function ServicesList({ services }: ServicesProps) {
@@ -59,42 +63,26 @@ export function Services() {
   const fetchServices = async () => {
     try {
       setLoading(true);
-      const res = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/hyper-function/services`,
-        {
-          headers: {
-            Authorization: `Bearer ${publicAnonKey}`,
-          },
-        }
-      );
-
-      const contentType = res.headers.get('content-type') || '';
-      const raw = await res.text();
+      
+      // ✅ Use Next.js API route instead of direct Supabase call
+      const res = await fetch(`${API_BASE}/api/services/service-list`, {
+        credentials: 'include', // Include cookies for potential auth
+      });
 
       if (!res.ok) {
-        let msg = raw;
-        if (contentType.includes('application/json')) {
-          try {
-            const parsed = JSON.parse(raw);
-            msg = parsed.error || parsed.message || JSON.stringify(parsed);
-          } catch {}
-        }
-        throw new Error(`Server error (${res.status}): ${msg}`);
+        const errorData = await res.json();
+        throw new Error(errorData.error || `Server error (${res.status})`);
       }
 
-      if (!contentType.includes('application/json')) {
-        throw new Error('Expected JSON response but received: ' + raw.slice(0, 1000));
-      }
-
-      const data = JSON.parse(raw);
+      const data = await res.json();
       const received: any[] = data.services || [];
       
-      const servicesWithIds: Service[] = received.map((p) => ({
-        id: p.id,
-        title: p.title,
-        description: p.details,
-        icon: p.icon,
-        createdAt: p.createdAt,
+      const servicesWithIds: Service[] = received.map((s) => ({
+        id: String(s.id),
+        title: s.title ?? '',
+        description: s.details ?? s.description ?? '',
+        icon: s.icon ?? 'Settings', // Default icon if none provided
+        createdAt: s.createdAt ?? s.created_at ?? new Date().toISOString(),
       }));
 
       // Sort newest first
@@ -106,7 +94,7 @@ export function Services() {
       setError(null);
     } catch (err) {
       console.error('Error fetching services:', err);
-      setError('Failed to load services. Please try again later.');
+      setError(err instanceof Error ? err.message : 'Failed to load services. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -161,13 +149,19 @@ export function Services() {
           </div>
         ) : error ? (
           <div className="text-center py-12">
-            <p className="text-red-400 mb-4 px-4 break-words">{error}</p>
-            <button 
-              onClick={fetchServices}
-              className="px-4 py-2 sm:px-6 sm:py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition-colors text-sm sm:text-base"
-            >
-              Retry
-            </button>
+            <div className="inline-flex flex-col items-center p-6 sm:p-8 rounded-2xl bg-red-500/10 border border-red-500/20 backdrop-blur-sm">
+              <p className="text-red-400 mb-4 px-4 break-words">{error}</p>
+              <button 
+                onClick={fetchServices}
+                className="px-4 py-2 sm:px-6 sm:py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition-colors text-sm sm:text-base font-medium"
+              >
+                Retry
+              </button>
+            </div>
+          </div>
+        ) : services.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-400 px-4 break-words">No services available at the moment.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -199,6 +193,13 @@ export function Services() {
                     <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-white mb-2 sm:mb-3 group-hover:text-amber-400 transition-colors break-words hyphens-auto">
                       {service.title}
                     </h3>
+                    
+                    {/* Description (optional, if you want to show it) */}
+                    {service.description && (
+                      <p className="text-xs sm:text-sm text-gray-400 mb-3 line-clamp-2 break-words">
+                        {service.description}
+                      </p>
+                    )}
                     
                     {/* Learn More Link */}
                     <a 

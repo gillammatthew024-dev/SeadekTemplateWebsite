@@ -2,13 +2,14 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { ScrollArea } from './ui/scroll-area';
-import { projectId, publicAnonKey } from '../../../utils/supabase/info';
+import { useSession } from 'next-auth/react';
+
 const API_BASE =
   (process.env.NEXT_PUBLIC_API_URL as string) ||
   (typeof window !== 'undefined' ? window.location.origin : '');
 
 interface Project {
-  id: bigint;
+  id: string;
   title: string;
   details: string;
   imageUrls: string[];
@@ -16,76 +17,76 @@ interface Project {
 }
 
 interface ProjectListProps {
-  targetTable?: 'make-server-be0083bc' | 'clever-responder';
+  targetTable?: 'main-portfolio' | 'seadek-portfolio';
 }
-export function ProjectList({targetTable = 'make-server-be0083bc'}: ProjectListProps) {
+
+export function ProjectList({ targetTable = 'main-portfolio' }: ProjectListProps) {
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { data: session } = useSession();
 
   useEffect(() => {
     fetchProjects();
   }, [targetTable]);
-  
-  const deleteProduct = async (id: bigint) => {
-    console.log(id);
-    try {
-      const res = await fetch(
-   `https://${projectId}.supabase.co/functions/v1/${targetTable}/projects/${id}`,
-    {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${publicAnonKey}`,
-    },
-  }
-);      if (!res.ok) {
-        throw new Error("Failed deleting project");
+
+  const deleteProduct = async (id: string) => {
+    if (!session) {
+      alert('You must be logged in to delete projects');
+      return;
+    }
+
+    if (!confirm('Are you sure you want to delete this project?')) {
+      return;
+    }
+
+    try { 
+      const res = await fetch(`${API_BASE}/api/projects/${targetTable}/${id}`, {
+        method: 'DELETE',
+        credentials: 'include', // Include session cookies
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.error || 'Failed to delete project');
       }
-  } catch (err) {
+
+      // Remove from UI
+      setProjects(prev => prev.filter(p => p.id !== id));
+      
+      // Optional: Show success message
+      alert('Project deleted successfully');
+    } catch (err) {
       console.error('Error deleting project:', err);
+      alert(err instanceof Error ? err.message : 'Failed to delete project');
     }
   };
 
   const fetchProjects = async () => {
     setIsLoading(true);
     setError(null);
-    console.log('Fetching projects for table:', targetTable);
 
     try {
-      const res = await fetch(
-   `https://${projectId}.supabase.co/functions/v1/${targetTable}/projects`,
-    {
-      headers: {
-        'Authorization': `Bearer ${publicAnonKey}`,
-    },
-  }
-);
-      const contentType = res.headers.get('content-type') || '';
-      const raw = await res.text();
+      // Use your existing Next.js API route for GET
+      const res = await fetch(`${API_BASE}/api/projects/${targetTable}`, {
+        credentials: 'include',
+      });
 
       if (!res.ok) {
-        let msg = raw;
-        if (contentType.includes('application/json')) {
-          try {
-            const parsed = JSON.parse(raw);
-            msg = parsed.error || parsed.message || JSON.stringify(parsed);
-          } catch {}
-        }
-        throw new Error(`Server error (${res.status}): ${msg}`);
+        const errorData = await res.json();
+        throw new Error(errorData.error || `Server error (${res.status})`);
       }
 
-      if (!contentType.includes('application/json')) {
-        throw new Error('Expected JSON response but received: ' + raw.slice(0, 1000));
-      }
-
-      const data = JSON.parse(raw);
+      const data = await res.json();
       const received: any[] = data.projects || [];
 
-      const projectsWithIds: Project[] = received.map((p, i) => ({
-        id: p.id, 
+      const projectsWithIds: Project[] = received.map((p) => ({
+        id: String(p.id),
         title: p.title ?? '',
-        details: p.details ?? '',
-        imageUrls: Array.isArray(p.imageUrls) ? p.imageUrls : (p.image_urls || p.images || []),
+        details: p.details ?? p.description ?? '',
+        imageUrls: Array.isArray(p.imageUrls)
+          ? p.imageUrls
+          : p.image_urls || p.images || [],
         createdAt: p.createdAt ?? p.created_at ?? new Date().toISOString(),
       }));
 
@@ -102,9 +103,7 @@ export function ProjectList({targetTable = 'make-server-be0083bc'}: ProjectListP
     <Card>
       <CardHeader>
         <CardTitle>Recent Projects</CardTitle>
-        <CardDescription>
-          View all uploaded projects
-        </CardDescription>
+        <CardDescription>View all uploaded projects</CardDescription>
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-[600px] pr-4">
@@ -122,7 +121,9 @@ export function ProjectList({targetTable = 'make-server-be0083bc'}: ProjectListP
 
           {!isLoading && !error && projects.length === 0 && (
             <div className="flex items-center justify-center py-8">
-              <p className="text-gray-500">No projects yet. Create your first one!</p>
+              <p className="text-gray-500">
+                No projects yet. Create your first one!
+              </p>
             </div>
           )}
 
@@ -133,12 +134,22 @@ export function ProjectList({targetTable = 'make-server-be0083bc'}: ProjectListP
                   key={project.id}
                   className="rounded-lg border bg-white p-4 shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <h3 className="font-semibold text-lg mb-2">{project.title}</h3>
-                  <button className="text-red-500 text-lg font-bold bg-transparent hover:bg-red-500 hover:text-white rounded px-2 py-1 transition" aria-label="Delete" onClick={() => deleteProduct(project.id)}> &times;</button>
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-semibold text-lg">{project.title}</h3>
+                    {session && (
+                      <button
+                        className="text-red-500 text-lg font-bold bg-transparent hover:bg-red-500 hover:text-white rounded px-2 py-1 transition"
+                        aria-label="Delete"
+                        onClick={() => deleteProduct(project.id)}
+                      >
+                        &times;
+                      </button>
+                    )}
+                  </div>
                   <p className="text-gray-600 text-sm mb-3 line-clamp-2">
                     {project.details}
                   </p>
-                  
+
                   {project.imageUrls && project.imageUrls.length > 0 && (
                     <div className="grid grid-cols-3 gap-2 mb-3">
                       {project.imageUrls.slice(0, 3).map((url, index) => (
@@ -158,7 +169,7 @@ export function ProjectList({targetTable = 'make-server-be0083bc'}: ProjectListP
                       )}
                     </div>
                   )}
-                  
+
                   <p className="text-xs text-gray-500">
                     Created: {new Date(project.createdAt).toLocaleString()}
                   </p>
