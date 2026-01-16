@@ -53,7 +53,8 @@ export async function POST(
   { params }: { params: { source: string } }
 ) {
   try {
-    if (!needsAdmin())
+    const token = await needsAdmin(request)
+    if (!token)
     {
       throw Error;
     }

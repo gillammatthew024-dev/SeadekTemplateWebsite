@@ -52,17 +52,17 @@ export async function POST(
   { params }: { params: { source: string } }
 ) {
   try {
-    const loggedIn = await needsAdmin();
+    const token = await needsAdmin(request)
+    if (!token)
+    {
+      throw Error;
+    }
+
 
     if (!validateOrigin(request))
   {
     return NextResponse.json({ error: 'Invalid source' }, { status: 400 });
   }
-
-    if (!loggedIn)
-    {
-        throw Error();
-    }
 
     const { source } = params;
     const config = getEndpointConfig(source);

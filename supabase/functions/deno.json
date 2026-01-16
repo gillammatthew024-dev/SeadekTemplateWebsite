@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "lib": ["deno.window", "deno.ns"],
+    "strict": true,
+    "types": ["@types/deno"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "https://esm.sh/preact"
+  },
+  "lint": {
+    "files": {
+      "include": ["./"],
+      "exclude": ["../_shared/"]
+    }
+  },
+  "fmt": {
+    "files": {
+      "include": ["./"],
+      "exclude": ["../_shared/"]
+    }
+  },
+  "dependencies": ["npm:hono"]
+
+}

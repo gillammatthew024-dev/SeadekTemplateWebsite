@@ -47,6 +47,7 @@ export default function AdminDashboard() {
         setPassword('');
       } else if (result?.ok) {
         toast.success('Access granted!');
+        console.log(session);
         // The session will automatically update, no need to manually set authentication state
       }
     } catch (error) {

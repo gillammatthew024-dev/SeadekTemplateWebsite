@@ -1,6 +1,5 @@
 'use client';
 import { use, useEffect, useState } from 'react';
-import { validateAdminPassword } from '../actions';
 import { ServiceForm } from '../../components/service-form';
 import { ServiceList } from '../../components/service-list';
 import { Toaster } from '../../components/ui/sonner';
@@ -8,7 +7,7 @@ import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { toast } from 'sonner';
-import { LogIn, LogOut, Router } from 'lucide-react';
+import { Loader2, LogIn, LogOut, Router } from 'lucide-react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
@@ -19,6 +18,7 @@ export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [isCheckingPassword, setIsCheckingPassword] = useState(false);
+  const [loading, setIsLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {if (status === 'authenticated' && session?.user?.role !== 'admin') {
@@ -32,31 +32,47 @@ export default function App() {
   };
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
+
     try {
       const result = await signIn('credentials', {
         password,
         redirect: false,
         callbackUrl: '/admin/service'
       });
+
       if (result?.error) {
         toast.error('Incorrect password');
         setPassword('');
       } else if (result?.ok) {
         toast.success('Access granted!');
-        setIsAuthenticated(true);
+        // The session will automatically update, no need to manually set authentication state
       }
-    }catch (error) {
+    } catch (error) {
       toast.error('An error occurred during authentication');
       console.error('Authentication error:', error);
     } finally {
-      setIsCheckingPassword(false);
+      setIsLoading(false);
     }
   };
-  const handleSignOut = async (e: React.FormEvent) => {
-    await signOut({redirect: false});
+
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
     toast.success('Signed out successfully');
+  };
+
+  // Show loading state while checking authentication
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="h-8 w-8 animate-spin text-gray-600" />
+          <p className="text-sm text-gray-600">Checking authentication...</p>
+        </div>
+      </div>
+    );
   }
-  if (!isAuthenticated) {
+  if (status === "unauthenticated") {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <Toaster />
@@ -108,7 +124,7 @@ export default function App() {
         <div className="grid gap-8 lg:grid-cols-2">
           {/* Create Project Form */}
           <div>
-            <ServiceForm onProjectCreated={handleProjectCreated} />
+            <ServiceForm onServiceCreated={handleProjectCreated} />
           </div>
 
           {/* Project List */}

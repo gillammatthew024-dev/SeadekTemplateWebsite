@@ -1,9 +1,8 @@
 // app/api/projects/[source]/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
 import {authOptions} from '../../../../../../lib/auth/options';
 import { getEndpointConfig } from '../../../../../../lib/config/endpoints';
-import { getSession, needsAdmin } from '../../../../../../lib/auth/getSession';
+import { needsAdmin } from '../../../../../../lib/auth/getSession';
 import { validateOrigin } from '../../../../../../lib/auth/validateOrigin';
 
 export async function DELETE(
@@ -11,12 +10,13 @@ export async function DELETE(
   { params }: { params: { source: string; id: string } }
 ) {
   try {
-    const loggedIn = needsAdmin();
-
-    if (!loggedIn)
+    console.log(request.headers.get("cookie"));
+    const token = await needsAdmin(request)
+    if (!token)
     {
-        throw Error();
+      throw Error;
     }
+
     if (!validateOrigin(request))
       {
         return NextResponse.json({ error: 'Invalid source' }, { status: 400 });
@@ -32,9 +32,7 @@ export async function DELETE(
 
     const response = await fetch(`${config.url}/projects/${id}`, {
       method: 'DELETE',
-      headers: {
-        'X-Timestamp': timestamp,
-      },
+      headers: config.headers
     });
 
     if (!response.ok) {

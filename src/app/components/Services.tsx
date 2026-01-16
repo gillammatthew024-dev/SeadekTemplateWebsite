@@ -164,7 +164,7 @@ export function Services() {
             <p className="text-gray-400 px-4 break-words">No services available at the moment.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid place-items-center grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {services.map((service, index) => (
               <motion.div
                 key={service.id}
@@ -179,7 +179,7 @@ export function Services() {
                 whileHover={{ y: -5 }}
                 className="group"
               >
-                <div className="relative h-full p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-slate-700/50 hover:border-amber-500/30 transition-all duration-300">
+                <div className="relative place-self-center h-full p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-slate-700/50 hover:border-amber-500/30 transition-all duration-300">
                   {/* Glow effect on hover */}
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-amber-500/0 to-orange-500/0 group-hover:from-amber-500/10 group-hover:to-orange-500/10 transition-all duration-300" />
                   

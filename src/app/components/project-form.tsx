@@ -56,16 +56,12 @@ export function ProjectForm({ onProjectCreated, targetTable = 'main-portfolio' }
         formData.append('images', file);
       });
 
-      const response = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/${targetTable}/projects`,
-        {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${publicAnonKey}`
-          },
-          body: formData
-        }
-      );
+       const response = await fetch(`/api/projects/${targetTable}`, {
+        method: 'POST',
+        body: formData,
+        credentials: "include"
+      });
+
 
       const contentType = response.headers.get('content-type') || '';
       const raw = await response.text();
